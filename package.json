@@ -8,7 +8,8 @@
     "radium": "^0.25.0",
     "radium-starter": "^0.11.8",
     "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react-dom": "^16.5.0",
+    "react-modal": "^3.6.1"
   },
   "devDependencies": {
     "react-scripts": "2.0.4"

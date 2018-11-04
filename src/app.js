@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {RadiumStarterRoot, Button} from 'radium-starter';
+import Demo from './demo';
 
 import Modal from './modal';
 
@@ -29,6 +30,7 @@ class App extends Component {
   render() {
     return (
       <RadiumStarterRoot>
+        <Demo />
         <div
           style={{
             height: '100vh',
