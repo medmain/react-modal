@@ -12,6 +12,8 @@ const ModalStack = ({stack, hideModal}) =>
             backgroundColor: 'rgba(0, 0, 0, 0.5)'
           }
         };
+        console.info('Render', Component, style);
+
         return <Component {...props} onRequestClose={hideModal} style={style} key={index} />;
       })
     : null;

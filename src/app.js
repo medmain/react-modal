@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 import Demo from './demo';
 
-import Modal from './modal';
+// import Modal from './modal';
+import Modal from './medmain-modal/modal-class';
+import {ModalProvider} from './medmain-modal/modal-context';
 
 const modal = new Modal();
 
@@ -30,19 +32,21 @@ class App extends Component {
   render() {
     return (
       <RadiumStarterRoot>
-        <Demo />
-        <div
-          style={{
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Button onClick={this.start}>Start</Button>
-        </div>
+        <ModalProvider>
+          <Demo />
+          <div
+            style={{
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Button onClick={this.start}>Start</Button>
+          </div>
 
-        {modal.createElement()}
+          {modal.createElement()}
+        </ModalProvider>
       </RadiumStarterRoot>
     );
   }

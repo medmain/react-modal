@@ -1,10 +1,12 @@
+/*
+Stateful context to handle the state open/hidden of a stack of modal windows.
+Approach inspired by https://medium.com/@BogdanSoare/how-to-use-reacts-new-context-api-to-easily-manage-modals-2ae45c7def81
+*/
 import React, {Component, createContext} from 'react';
 import ModalStack from './modal-stack';
 
 const ModalContext = createContext({
-  component: null,
-  props: {},
-  index: -1,
+  stack: [],
   showModal: () => {},
   hideModal: () => {}
 });
