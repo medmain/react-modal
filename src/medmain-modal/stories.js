@@ -77,17 +77,33 @@ storiesOf('Modal Class API', module)
       PUSH ME!
     </Button>
   ))
-  .add('Custom confirm() example', () => (
+  .add('Custom confirm() example 1', () => (
     <Button
       onClick={async () => {
-        const answer = await modal.confirm('Are you sure? (Custom)', {
-          okButton: {
-            title: 'Yeees!',
-            // value: 200, // would work
-            onClick: ({close}) => {
-              action('Custom OK button!')();
-              close(200); // don't work, 200 is not returned
+        const answer = await modal.confirm(
+          'Are you sure? (Custom button label and onClick handler)',
+          {
+            okButton: {
+              title: 'Yeees!',
+              onClick: ({close}) => {
+                action('Custom OK button!')();
+                close(200); // the modal will resolve with a custom value
+              }
             }
+          }
+        );
+        action('Answer')(answer);
+      }}
+    >
+      PUSH ME!
+    </Button>
+  ))
+  .add('Custom confirm() example 2', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.confirm('Are you sure? (Number `1` should be returned)', {
+          okButton: {
+            value: 1
           }
         });
         action('Answer')(answer);

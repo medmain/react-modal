@@ -20,7 +20,6 @@ const ConfirmDialog = ({
     },
     button: okButton,
     onClose
-    // hideModal
   });
   const finalCancelButton = mergeButton({
     defaultButton: {
@@ -30,7 +29,6 @@ const ConfirmDialog = ({
     },
     button: cancelButton,
     onClose
-    // hideModal
   });
   const buttons = [finalOkButton, finalCancelButton];
   return (
@@ -44,22 +42,29 @@ const ConfirmDialog = ({
   );
 };
 
-function mergeButton({defaultButton, button, onClose, hideModal}) {
+/*
+Take a default "button" `{title, value, isDefault}`
+related to a given type of modal (E.g. OK or Cancel button),
+a button provided by the user {title, value or onClick, isDefault} and merge everything,
+returning the button object to be used in the modal.
+*/
+function mergeButton({defaultButton, button, onClose}) {
   const merged = button
     ? {
         ...defaultButton,
         ...button
       }
     : defaultButton;
+  // Default onClick handler: the modal will resolve with the `value` property of the button
   const defaultOnClick = () => {
     onClose(merged.value);
-    // hideModal();
   };
-  const customOnClick = x => {
+  // When a custom onClick handler is provided, the user calls close passing a value.
+  // the modal will resolve with the value provided
+  const customOnClick = () => {
     button.onClick({
-      close: () => {
-        // hideModal();
-        onClose(merged.value);
+      close: value => {
+        onClose(value);
       }
     });
   };
