@@ -7,7 +7,7 @@ a class that provides the following method:
 import React from 'react';
 
 import {ModalConsumer} from './modal-context';
-import SimpleDialog from './components/SimpleDialog';
+import {ConfirmDialog} from './components';
 
 const OK_BUTTON_TITLE = 'OK';
 const CANCEL_BUTTON_TITLE = 'Cancel';
@@ -22,37 +22,21 @@ class Modal {
   createElement() {
     return (
       <ModalConsumer>
-        {({showModal}) => {
+        {({showModal, hideModal}) => {
           // Attach the modal methods now that we have access to `showModal` function
-          this.confirm = confirm({showModal, options: this.options});
+          this.confirm = confirm({showModal, hideModal, options: this.options});
         }}
       </ModalConsumer>
     );
   }
 }
 
-const confirm = ({showModal, options}) => (message, props = {}) => {
-  const {okButtonTitle, cancelButtonTitle} = options;
-  const {okButton} = props;
+const confirm = ({showModal, hideModal, options}) => (message, props = {}) => {
   return new Promise(resolve => {
-    const onSelect = value => resolve(value);
-    const defaultOkButton = {
-      value: true,
-      isDefault: true,
-      title: propToString(okButtonTitle),
-      onClick: () => onSelect(true)
-    };
-    const finalOkButton = {...defaultOkButton, ...okButton};
-    const cancelButton = {
-      value: false,
-      default: false,
-      title: propToString(cancelButtonTitle)
-    };
-    const buttons = [finalOkButton, cancelButton];
-    return showModal(SimpleDialog, {message, buttons, ...props, onSelect});
+    return showModal(ConfirmDialog, {message, ...props, onClose: value => resolve(value)});
   });
 };
 
-const propToString = prop => (typeof props === 'function' ? prop() : prop);
+// const propToString = prop => (typeof props === 'function' ? prop() : prop);
 
 export default Modal;
