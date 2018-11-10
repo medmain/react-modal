@@ -5,9 +5,9 @@ import {action} from '@storybook/addon-actions';
 import {linkTo} from '@storybook/addon-links';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
-import {Dialog, ConfirmDialog} from '../components';
-import {ModalProvider, ModalConsumer} from '../modal-context';
-import Modal from '../modal-class';
+import {Dialog, ConfirmDialog} from './components';
+import {ModalProvider, ModalConsumer} from './modal-context';
+import Modal from './modal-class';
 
 const buttons = [
   {title: 'Oui', value: 1, isDefault: true},
@@ -83,9 +83,10 @@ storiesOf('Modal Class API', module)
         const answer = await modal.confirm('Are you sure? (Custom)', {
           okButton: {
             title: 'Yeees!',
+            // value: 200, // would work
             onClick: ({close}) => {
               action('Custom OK button!')();
-              close(200);
+              close(200); // don't work, 200 is not returned
             }
           }
         });
@@ -107,7 +108,7 @@ storiesOf('Modal Class API', module)
               onClick: async ({close}) => {
                 const okay = await modal.confirm('Are you sure?');
                 if (okay) {
-                  close(true);
+                  close(200);
                 }
               }
             }

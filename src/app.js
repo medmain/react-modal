@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 import Demo from './demo';
 
-import Modal from './modal';
+import Modal from './original/original-modal';
 // import Modal from './medmain-modal/modal-class';
 import {ModalProvider} from './medmain-modal/modal-context';
 
