@@ -138,4 +138,16 @@ storiesOf('Modal Class API', module)
     >
       START
     </Button>
+  ))
+  .add('Rendering raw HTML', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.confirm({
+          __html: "De la <b>musique</b> avant toute chose<br />Et pour cela préfère l'impair"
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Show `confirm` modal with HTML
+    </Button>
   ));

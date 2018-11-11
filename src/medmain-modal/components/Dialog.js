@@ -53,7 +53,7 @@ class Dialog extends React.Component {
   }
 }
 
-Dialog.Body = ({children}) => <div>{children}</div>;
+Dialog.Body = ({children}) => <div>{renderMessage(children)}</div>;
 
 Dialog.Footer = ({children, ...otherProps}) => {
   return <div {...otherProps}>{children}</div>;
@@ -85,7 +85,24 @@ Dialog.ActionBar = ({buttons}) => (
   </div>
 );
 
+/*
+Render either a String or a function that returns JSX code
+*/
 const renderText = text => (typeof text === 'function' ? text() : text);
+
+/*
+Render either a DOM node or raw HTML if the argument is an object with the `__html` property
+*/
+const renderMessage = message => {
+  const isRawHtml = Object.prototype.hasOwnProperty.call(message, '__html');
+  return isRawHtml ? (
+    <div key="message" dangerouslySetInnerHTML={message} />
+  ) : (
+    <div key="message" style={{whiteSpace: 'pre-line'}}>
+      {message}
+    </div>
+  );
+};
 
 Dialog.Button = ({children, ...otherProps}) => {
   return <Button {...otherProps}>{children}</Button>;
