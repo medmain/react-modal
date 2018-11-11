@@ -64,13 +64,12 @@ Dialog.ActionBar = ({buttons}) => (
     key="buttons"
     style={{
       display: 'flex',
-      flexDirection: 'row-reverse',
+      flexDirection: 'row-reverse', // render buttons in the opposite order
       marginTop: '1.5rem'
     }}
   >
     {buttons.map(({title, value, isDefault, onClick}, i) => {
-      const style = i > 0 ? {marginRight: '.75rem'} : {};
-      // Buttons will be rendered in the opposite order because of CSS
+      const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
       return (
         <Dialog.Button
           key={value}
@@ -79,12 +78,14 @@ Dialog.ActionBar = ({buttons}) => (
           rsPrimary={isDefault}
           autoFocus={isDefault /* to let user validate with Enter key */}
         >
-          {title}
+          {renderText(title)}
         </Dialog.Button>
       );
     })}
   </div>
 );
+
+const renderText = text => (typeof text === 'function' ? text() : text);
 
 Dialog.Button = ({children, ...otherProps}) => {
   return <Button {...otherProps}>{children}</Button>;

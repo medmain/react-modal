@@ -67,12 +67,14 @@ Options object:
 {
   value,
   title,
-  onClick
+  onClick,
+  isDefault
 }
 ```
 
-| Key     | Type                         | Default value | Description                                                          |
-| ------- | ---------------------------- | ------------- | -------------------------------------------------------------------- |
-| value   | Any                          | true          | Value resolved by the Promise returned by the modal method           |
-| title   | String                       | undefined     | Label of the button                                                  |
-| onClick | Function `({onClick}) => {}` | undefined     | Function called to customize the behavior when the button is clicked |
+| Key       | Type                       | Default value | Description                                                                  |
+| --------- | -------------------------- | ------------- | ---------------------------------------------------------------------------- |
+| value     | Any                        | true          | Value resolved by the Promise returned by the modal method                   |
+| title     | String or function         | undefined     | Label of the button as a string or a function `() => <span>OK</span>`        |
+| onClick   | Function `({close}) => {}` | undefined     | Function called to customize the behavior when the button is clicked         |
+| isDefault | Boolean                    | false         | Set to true to assign primary button style and trigger to keyboard ENTER key |

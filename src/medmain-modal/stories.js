@@ -89,6 +89,9 @@ storiesOf('Modal Class API', module)
                 action('Custom OK button!')();
                 close(200); // the modal will resolve with a custom value
               }
+            },
+            cancelButton: {
+              title: () => <span>No way</span>
             }
           }
         );
