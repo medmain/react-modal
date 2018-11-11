@@ -70,8 +70,15 @@ Dialog.ActionBar = ({buttons}) => (
   >
     {buttons.map(({title, value, isDefault, onClick}, i) => {
       const style = i > 0 ? {marginRight: '.75rem'} : {};
+      // Buttons will be rendered in the opposite order because of CSS
       return (
-        <Dialog.Button key={value} onClick={onClick} style={style} rsPrimary={isDefault}>
+        <Dialog.Button
+          key={value}
+          onClick={onClick}
+          style={style}
+          rsPrimary={isDefault}
+          autoFocus={isDefault /* to let user validate with Enter key */}
+        >
           {title}
         </Dialog.Button>
       );
