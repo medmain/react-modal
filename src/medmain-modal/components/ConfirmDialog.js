@@ -33,8 +33,8 @@ const ConfirmDialog = ({
   const buttons = [finalOkButton, finalCancelButton];
   return (
     <Dialog onClose={onClose} {...otherProps}>
-      <Dialog.Title>{title}</Dialog.Title>
-      <Dialog.Body>{message}</Dialog.Body>
+      {title && <Dialog.Title>{title}</Dialog.Title>}
+      <Dialog.Body>{renderMessage(message)}</Dialog.Body>
       <Dialog.Footer>
         <Dialog.ActionBar buttons={buttons} />
       </Dialog.Footer>
@@ -74,6 +74,20 @@ function mergeButton({defaultButton, button, onClose}) {
     onClick
   };
 }
+
+/*
+Render either a DOM node or raw HTML if the argument is an object with the `__html` property
+*/
+const renderMessage = message => {
+  const isRawHtml = Object.prototype.hasOwnProperty.call(message, '__html');
+  return isRawHtml ? (
+    <div key="message" dangerouslySetInnerHTML={message} />
+  ) : (
+    <div key="message" style={{whiteSpace: 'pre-line'}}>
+      {message}
+    </div>
+  );
+};
 
 ConfirmDialog.propTypes = {};
 

@@ -3,13 +3,7 @@ import ReactModal from 'react-modal';
 import {RadiumStarter, Button} from 'radium-starter';
 import PropTypes from 'prop-types';
 
-// const Dialog = ({children, ...otherProps}) => {
-//   return (
-//     <ReactModal isOpen {...otherProps}>
-//       {children}
-//     </ReactModal>
-//   );
-// };
+import getStyle from './style';
 
 const Context = React.createContext();
 
@@ -42,67 +36,65 @@ class Dialog extends React.Component {
     );
   };
   render() {
-    const {children, onClose, ...otherProps} = this.props;
+    const {children, onClose, style, ...otherProps} = this.props;
+    console.info({style});
     return (
-      <Context.Provider value={otherProps}>
-        <ReactModal isOpen {...otherProps} onRequestClose={() => onClose(false)}>
-          {children}
-        </ReactModal>
-      </Context.Provider>
+      <RadiumStarter>
+        {(t, s) => (
+          <Context.Provider value={otherProps}>
+            <ReactModal
+              isOpen
+              {...otherProps}
+              style={getStyle(t, s, style)}
+              onRequestClose={() => onClose(false)}
+            >
+              {children}
+            </ReactModal>
+          </Context.Provider>
+        )}
+      </RadiumStarter>
     );
   }
 }
 
-Dialog.Body = ({children}) => <div>{renderMessage(children)}</div>;
+Dialog.Body = ({children}) => <div>{children}</div>;
 
 Dialog.Footer = ({children, ...otherProps}) => {
-  return <div {...otherProps}>{children}</div>;
+  return (
+    <div
+      key="buttons"
+      style={{
+        display: 'flex',
+        flexDirection: 'row-reverse', // render buttons in the opposite order
+        marginTop: '1.5rem'
+      }}
+      {...otherProps}
+    >
+      {children}
+    </div>
+  );
 };
 
-Dialog.ActionBar = ({buttons}) => (
-  <div
-    key="buttons"
-    style={{
-      display: 'flex',
-      flexDirection: 'row-reverse', // render buttons in the opposite order
-      marginTop: '1.5rem'
-    }}
-  >
-    {buttons.map(({title, value, isDefault, onClick}, i) => {
-      const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
-      return (
-        <Dialog.Button
-          key={value}
-          onClick={onClick}
-          style={style}
-          rsPrimary={isDefault}
-          autoFocus={isDefault /* to let user validate with Enter key */}
-        >
-          {renderText(title)}
-        </Dialog.Button>
-      );
-    })}
-  </div>
-);
+Dialog.ActionBar = ({buttons}) =>
+  buttons.map(({title, value, isDefault, onClick}, i) => {
+    const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
+    return (
+      <Dialog.Button
+        key={value}
+        onClick={onClick}
+        style={style}
+        rsPrimary={isDefault}
+        autoFocus={isDefault /* to let user validate with Enter key */}
+      >
+        {renderText(title)}
+      </Dialog.Button>
+    );
+  });
 
 /*
 Render either a String or a function that returns JSX code
 */
 const renderText = text => (typeof text === 'function' ? text() : text);
-
-/*
-Render either a DOM node or raw HTML if the argument is an object with the `__html` property
-*/
-const renderMessage = message => {
-  const isRawHtml = Object.prototype.hasOwnProperty.call(message, '__html');
-  return isRawHtml ? (
-    <div key="message" dangerouslySetInnerHTML={message} />
-  ) : (
-    <div key="message" style={{whiteSpace: 'pre-line'}}>
-      {message}
-    </div>
-  );
-};
 
 Dialog.Button = ({children, ...otherProps}) => {
   return <Button {...otherProps}>{children}</Button>;

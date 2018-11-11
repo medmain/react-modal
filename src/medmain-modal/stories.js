@@ -27,7 +27,7 @@ const MyModal = ({extra, ...otherProps}) => (
       <br />
       {extra}
     </Dialog.Body>
-    <Dialog.Footer style={{backgroundColor: '#eee'}}>
+    <Dialog.Footer>
       <Button onClick={() => otherProps.onClose(1)}>VALUE 1</Button>{' '}
       <Button onClick={() => otherProps.onClose(2)}>VALUE 2</Button>
     </Dialog.Footer>
@@ -42,7 +42,19 @@ storiesOf('Stateless Components', module)
     <MyModal onClose={action('Modal closed!')} extra={'First example'} />
   ))
   .add('ConfirmDialog Component', () => (
-    <ConfirmDialog title="Warning" message="Are you sure?" onClose={action('Modal closed!')} />
+    <ConfirmDialog
+      title="Warning"
+      message="Are you sure? (default width)"
+      onClose={action('Modal closed!')}
+    />
+  ))
+  .add('ConfirmDialog Component, custom width', () => (
+    <ConfirmDialog
+      title="Warning"
+      message="Are you sure? (700px)"
+      onClose={action('Modal closed!')}
+      style={{content: {width: 700}}}
+    />
   ));
 
 storiesOf('Modal Class API', module)
