@@ -50,4 +50,33 @@ storiesOf('Original implementation', module)
     >
       Show `confirm` modal with HTML
     </Button>
+  ))
+  .add('Calling modal.dialog', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.dialog({
+          title: 'Choose an option',
+          message: 'We have just called `modal.dialog()`',
+          buttons: [
+            {title: 'Option A', value: 'A', isDefault: true},
+            {title: 'Option B', value: 'B'}
+          ]
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Call `modal.dialog()`
+    </Button>
+  ))
+  .add('Calling modal.alert', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.alert('This has just happened!', {
+          title: 'Sweet Alert'
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Call `modal.alert()`
+    </Button>
   ));

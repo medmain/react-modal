@@ -1,45 +1,67 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
-import {linkTo} from '@storybook/addon-links';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
-import {Dialog, ConfirmDialog} from './components';
+import {DialogButton, Message, Modal, Dialog, Alert, ConfirmDialog} from './components';
 import {ModalProvider, ModalConsumer} from './modal-context';
-import Modal from './modal-class';
-
-const buttons = [
-  {title: 'Oui', value: 1, isDefault: true},
-  {title: 'Non', value: 0, isDefault: false}
-];
+import ModalClass from './modal-class';
 
 const MyModal = ({extra, ...otherProps}) => (
-  <Dialog {...otherProps}>
-    <Dialog.Title>
+  <Modal {...otherProps}>
+    <Modal.Title>
       Art poétique
       <Button onClick={() => otherProps.onClose(false)}>CLOSE</Button>
-    </Dialog.Title>
-    <Dialog.Body>
+    </Modal.Title>
+    <Modal.Body>
       De la musique avant toute chose
       <br />
       Et pour cela...
       <br />
       {extra}
-    </Dialog.Body>
-    <Dialog.Footer>
+    </Modal.Body>
+    <Modal.Footer>
       <Button onClick={() => otherProps.onClose(1)}>VALUE 1</Button>{' '}
       <Button onClick={() => otherProps.onClose(2)}>VALUE 2</Button>
-    </Dialog.Footer>
-  </Dialog>
+    </Modal.Footer>
+  </Modal>
 );
 
-const modal = new Modal();
+const modal = new ModalClass();
 
 storiesOf('Stateless Components', module)
   .addDecorator(story => <RadiumStarterRoot>{story()}</RadiumStarterRoot>)
-  .add('Dialog Base Component', () => (
+  .add('Modal Base Component', () => (
     <MyModal onClose={action('Modal closed!')} extra={'First example'} />
+  ))
+  .add('Dialog Button', () => (
+    <Fragment>
+      <DialogButton onClose={action('Button pushed!')} value="A" title="Value A" />{' '}
+      <DialogButton onClose={action('Button pushed!')} value="B" title="Value B" />
+    </Fragment>
+  ))
+  .add('Message with raw HTML', () => (
+    <Message text={{__html: 'De la <b>musique</b> avant toute chose'}} />
+  ))
+  .add('Dialog Component', () => (
+    <Dialog
+      onClose={action('Modal closed!')}
+      title={'My dialog'}
+      message={'De la musique avant toute chose'}
+      buttons={[{title: 'Option A', value: 'A', isDefault: true}, {title: 'Option B', value: 'B'}]}
+    />
+  ))
+  .add('Dialog Component with raw HTML', () => (
+    <Dialog
+      onClose={action('Modal closed!')}
+      title={'My dialog'}
+      message={{__html: 'De la <b>musique</b> avant toute chose'}}
+      buttons={[{title: 'Option A', value: 'A', isDefault: true}, {title: 'Option B', value: 'B'}]}
+    />
+  ))
+  .add('Alert Component', () => (
+    <Alert onClose={action('Modal closed!')} title={'Success'} message={'It worked'} />
   ))
   .add('ConfirmDialog Component', () => (
     <ConfirmDialog
@@ -61,8 +83,10 @@ storiesOf('Modal Class API', module)
   .addDecorator(story => (
     <RadiumStarterRoot>
       <ModalProvider>
-        {modal.createElement()}
-        {story()}
+        <div style={{textAlign: 'center', padding: '2rem'}}>
+          {modal.createElement()}
+          {story()}
+        </div>
       </ModalProvider>
     </RadiumStarterRoot>
   ))
@@ -74,22 +98,32 @@ storiesOf('Modal Class API', module)
             showModal(MyModal, {extra: 'Second example', onClose: action('Modal closed!')})
           }
         >
-          PUSH ME!
+          CALL `showModal()`
         </Button>
       )}
     </ModalConsumer>
   ))
-  .add('Basic confirm() example', () => (
+  .add('.alert() example', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.alert('This is an alert.');
+        action('Answer')(answer);
+      }}
+    >
+      CALL `modal.alert()`
+    </Button>
+  ))
+  .add('.confirm() basic example', () => (
     <Button
       onClick={async () => {
         const answer = await modal.confirm('Are you sure?');
         action('Answer')(answer);
       }}
     >
-      PUSH ME!
+      `modal.confirm()` most basic example
     </Button>
   ))
-  .add('Custom confirm() example 1', () => (
+  .add('.confirm() custom 1', () => (
     <Button
       onClick={async () => {
         const answer = await modal.confirm(
@@ -110,10 +144,10 @@ storiesOf('Modal Class API', module)
         action('Answer')(answer);
       }}
     >
-      PUSH ME!
+      CALL `modal.confirm` with custom event handler
     </Button>
   ))
-  .add('Custom confirm() example 2', () => (
+  .add('.confirm() custom 2', () => (
     <Button
       onClick={async () => {
         const answer = await modal.confirm('Are you sure? (Number `1` should be returned)', {
@@ -124,7 +158,24 @@ storiesOf('Modal Class API', module)
         action('Answer')(answer);
       }}
     >
-      PUSH ME!
+      CALL `modal.confirm` with custom button
+    </Button>
+  ))
+  .add('.dialog() example', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.dialog({
+          title: 'Choose an option',
+          message: 'We have just called `modal.dialog()`',
+          buttons: [
+            {title: 'Option A', value: 'A', isDefault: true},
+            {title: 'Option B', value: 'B'}
+          ]
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Call `modal.dialog()`
     </Button>
   ))
   .add('Original example', () => (
