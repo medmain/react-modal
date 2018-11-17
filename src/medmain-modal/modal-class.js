@@ -1,8 +1,10 @@
 /*
-For compatibility with the previous API,
+For compatibility with the existing API,
 a class that provides the following method:
 - createElement
 - confirm
+- alert
+- dialog
 */
 import React from 'react';
 
@@ -42,14 +44,25 @@ class Modal {
 }
 
 const showComponent = ({Component, showModal}) => (message, props = {}) => {
+  const style = setModalStyle(props);
   return new Promise(resolve => {
-    return showModal(Component, {message, ...props, onClose: value => resolve(value)});
+    return showModal(Component, {message, style, ...props, onClose: value => resolve(value)});
   });
 };
 const showDialog = ({showModal}) => (props = {}) => {
+  const style = setModalStyle(props);
   return new Promise(resolve => {
-    return showModal(Dialog, {...props, onClose: value => resolve(value)});
+    return showModal(Dialog, {style, ...props, onClose: value => resolve(value)});
   });
+};
+
+/*
+Convert style properties (width, padding...) into the style object applied to ReactModal
+*/
+const setModalStyle = props => {
+  const {width} = props;
+  const style = width ? {content: {width}} : {};
+  return style;
 };
 
 export default Modal;

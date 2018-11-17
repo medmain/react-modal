@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Modal from './Modal';
 import Message from './Message';
-import {processButton} from './buttons';
 
 const Dialog = ({onClose, message, title, buttons, ...otherProps}) => {
   return (

@@ -1,12 +1,15 @@
 import React, {Fragment} from 'react';
+import ReactModal from 'react-modal';
 
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
-import {RadiumStarterRoot, Button} from 'radium-starter';
+import {RadiumStarterRoot, RadiumStarter, Button} from 'radium-starter';
 
 import {DialogButton, Message, Modal, Dialog, Alert, ConfirmDialog} from './components';
 import {ModalProvider, ModalConsumer} from './modal-context';
 import ModalClass from './modal-class';
+import getStyle from './components/style';
+import Slot from './modal-stack-slot';
 
 const MyModal = ({extra, ...otherProps}) => (
   <Modal {...otherProps}>
@@ -30,11 +33,25 @@ const MyModal = ({extra, ...otherProps}) => (
 
 const modal = new ModalClass();
 
+const Wrapper = ({style, children}) => {
+  return (
+    <RadiumStarter>
+      {(t, s) => <Slot isOpen component={() => children} t={t} s={s} style={style} />}
+    </RadiumStarter>
+  );
+};
+
 storiesOf('Stateless Components', module)
-  .addDecorator(story => <RadiumStarterRoot>{story()}</RadiumStarterRoot>)
-  .add('Modal Base Component', () => (
-    <MyModal onClose={action('Modal closed!')} extra={'First example'} />
-  ))
+  .addDecorator(story => {
+    return (
+      <RadiumStarterRoot>
+        <RadiumStarter>{(t, s) => <Slot isOpen component={story} t={t} s={s} />}</RadiumStarter>
+      </RadiumStarterRoot>
+    );
+  })
+  .add('Modal Base Component', (props, x) => {
+    return <MyModal onClose={action('Modal closed!')} extra={'First example'} isOpen />;
+  })
   .add('Dialog Button', () => (
     <Fragment>
       <DialogButton onClose={action('Button pushed!')} value="A" title="Value A" />{' '}
@@ -62,21 +79,28 @@ storiesOf('Stateless Components', module)
   ))
   .add('Alert Component', () => (
     <Alert onClose={action('Modal closed!')} title={'Success'} message={'It worked'} />
-  ))
+  ));
+
+storiesOf('Stateless components - Style variations', module)
+  .addDecorator(story => <RadiumStarterRoot>{story()}</RadiumStarterRoot>)
   .add('ConfirmDialog Component', () => (
-    <ConfirmDialog
-      title="Warning"
-      message="Are you sure? (default width)"
-      onClose={action('Modal closed!')}
-    />
+    <Wrapper>
+      <ConfirmDialog
+        title="Warning"
+        message="Are you sure? (default width)"
+        onClose={action('Modal closed!')}
+      />
+    </Wrapper>
   ))
   .add('ConfirmDialog Component, custom width', () => (
-    <ConfirmDialog
-      title="Warning"
-      message="Are you sure? (700px)"
-      onClose={action('Modal closed!')}
-      style={{content: {width: 700}}}
-    />
+    <Wrapper style={{content: {width: 700}}}>
+      <ConfirmDialog
+        title="Warning"
+        message="Are you sure? (700px)"
+        onClose={action('Modal closed!')}
+        style={{content: {width: 700}}}
+      />
+    </Wrapper>
   ));
 
 storiesOf('Modal Class API', module)

@@ -3,6 +3,7 @@ import ReactModal from 'react-modal';
 import {RadiumStarter, Button} from 'radium-starter';
 import PropTypes from 'prop-types';
 
+import './modal.css';
 import getStyle from './style';
 import DialogButton from './DialogButton';
 
@@ -42,14 +43,14 @@ class Dialog extends React.Component {
       <RadiumStarter>
         {(t, s) => (
           <Context.Provider value={otherProps}>
-            <ReactModal
-              isOpen
+            {children}
+            {/* <ReactModal
               {...otherProps}
               style={getStyle(t, s, style)}
               onRequestClose={() => onClose(false)}
             >
               {children}
-            </ReactModal>
+            </ReactModal> */}
           </Context.Provider>
         )}
       </RadiumStarter>
