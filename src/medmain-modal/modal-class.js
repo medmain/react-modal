@@ -8,14 +8,11 @@ a class that provides the following method:
 */
 import React from 'react';
 
-import {ModalConsumer} from './modal-context';
+import {ModalProvider, ModalConsumer} from './modal-context';
 import {Confirm, Alert, Dialog} from './components';
 
-const OK_BUTTON_TITLE = 'OK';
-const CANCEL_BUTTON_TITLE = 'Cancel';
-
 class Modal {
-  constructor({okButtonTitle = OK_BUTTON_TITLE, cancelButtonTitle = CANCEL_BUTTON_TITLE} = {}) {
+  constructor({okButtonTitle, cancelButtonTitle} = {}) {
     this.options = {
       okButtonTitle,
       cancelButtonTitle
@@ -23,25 +20,29 @@ class Modal {
   }
   createElement() {
     return (
-      <ModalConsumer>
-        {({showModal /*hideModal*/}) => {
-          // Attach the modal methods now that we have access to `showModal` function
-          this.alert = showComponent({
-            Component: Alert,
-            showModal
-          });
-          this.confirm = showComponent({
-            Component: Confirm,
-            showModal
-          });
-          this.dialog = showDialog({
-            showModal
-          });
-        }}
-      </ModalConsumer>
+      <ModalProvider>
+        <ModalConsumer>
+          {({showModal /*hideModal*/}) => {
+            // Attach the modal methods now that we have access to `showModal` function
+            this.alert = showComponent({
+              Component: withProps({okButtonTitle: this.okButtonTitle})(Alert),
+              showModal
+            });
+            this.confirm = showComponent({
+              Component: Confirm,
+              showModal
+            });
+            this.dialog = showDialog({
+              showModal
+            });
+          }}
+        </ModalConsumer>
+      </ModalProvider>
     );
   }
 }
+
+const withProps = extraProps => Wrapped => props => Wrapped({...props, ...extraProps});
 
 const showComponent = ({Component, showModal}) => (message, props = {}) => {
   const style = setModalStyle(props);

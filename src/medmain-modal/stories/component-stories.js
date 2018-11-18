@@ -6,30 +6,7 @@ import {RadiumStarterRoot, RadiumStarter, Button} from 'radium-starter';
 
 import {DialogButton, Message, Modal, Dialog, Alert, Confirm} from '../components';
 import Slot from '../modal-stack-slot';
-
-/*
-Example of content we want to display in a modal window
-*/
-const MyModal = ({extra, ...otherProps}) => (
-  <Modal {...otherProps}>
-    <Modal.Title>
-      Art poétique <Button onClick={() => otherProps.onClose(false)}>[X]</Button>
-    </Modal.Title>
-    <Modal.Body>
-      De la musique avant toute chose
-      <br />
-      Et pour cela...
-      <br />
-      {extra}
-    </Modal.Body>
-    <Modal.Footer>
-      <Button onClick={() => otherProps.onClose(1)}>VALUE 1</Button>
-      <Button onClick={() => otherProps.onClose(2)} style={{marginRight: '1rem'}}>
-        VALUE 2
-      </Button>
-    </Modal.Footer>
-  </Modal>
-);
+import MyModal from './MyModal';
 
 // Wrapper used to be able to pass custom styles to the Modal
 const Wrapper = ({style, children}) => {
@@ -48,15 +25,22 @@ storiesOf('Stateless Components', module)
       </RadiumStarterRoot>
     );
   })
-  .add('Modal Base Component', (props, x) => {
+  .add('Modal Base Component', () => {
     return <MyModal onClose={action('Modal closed!')} extra={'First example'} isOpen />;
   })
-  .add('Dialog Button', () => (
-    <Fragment>
-      <DialogButton onClose={action('Button pushed!')} value="A" title="Value A" />{' '}
-      <DialogButton onClose={action('Button pushed!')} value="B" title="Value B" />
-    </Fragment>
-  ))
+  .add('Dialog Button', () => {
+    const onClose = action('Button pushed');
+    const onClick = ({close}) => {
+      close('Custom value!');
+    };
+    return (
+      <Fragment>
+        <DialogButton onClose={onClose} value="A" title="Value A" />{' '}
+        <DialogButton onClose={onClose} value="B" title="Value B" />{' '}
+        <DialogButton onClose={onClose} onClick={onClick} title="Custom Event Handler" />
+      </Fragment>
+    );
+  })
   .add('Message with raw HTML', () => (
     <Message text={{__html: 'De la <b>musique</b> avant toute chose'}} />
   ))

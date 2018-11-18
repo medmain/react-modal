@@ -1,4 +1,6 @@
-export function getOkButton({okButtonTitle, okButton, onClose}) {
+import {OK_BUTTON_TITLE, CANCEL_BUTTON_TITLE} from './constants';
+
+export function getOkButton({okButtonTitle = OK_BUTTON_TITLE, okButton, onClose}) {
   return mergeButton({
     defaultButton: {
       title: okButtonTitle,
@@ -10,7 +12,7 @@ export function getOkButton({okButtonTitle, okButton, onClose}) {
   });
 }
 
-export function getCancelButton({cancelButtonTitle, cancelButton, onClose}) {
+export function getCancelButton({cancelButtonTitle = CANCEL_BUTTON_TITLE, cancelButton, onClose}) {
   return mergeButton({
     defaultButton: {
       title: cancelButtonTitle,
