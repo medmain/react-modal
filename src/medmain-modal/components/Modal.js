@@ -56,6 +56,9 @@ Modal.ActionBar = ({onClose, buttons}) =>
     return <DialogButton key={props.value} {...props} onClose={onClose} style={style} />;
   });
 
-Modal.propTypes = {};
+Modal.ActionBar.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  buttons: PropTypes.array.isRequired
+};
 
 export default Modal;

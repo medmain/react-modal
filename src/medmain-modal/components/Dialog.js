@@ -20,6 +20,9 @@ const Dialog = ({onClose, message, title, buttons, ...otherProps}) => {
   );
 };
 
-Dialog.propTypes = {};
+Dialog.propTypes = {
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  onClose: PropTypes.func.isRequired
+};
 
 export default Dialog;

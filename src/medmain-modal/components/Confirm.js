@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Dialog from './Dialog';
 import {getOkButton, getCancelButton} from './buttons';
@@ -17,7 +16,5 @@ const Confirm = ({
   const buttons = [mergedOkButton, mergedCancelButton];
   return <Dialog {...otherProps} onClose={onClose} buttons={buttons} />;
 };
-
-Confirm.propTypes = {};
 
 export default Confirm;
