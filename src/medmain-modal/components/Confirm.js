@@ -8,8 +8,8 @@ const Confirm = ({
   okButton,
   cancelButton,
   onClose,
-  okButtonTitle = 'OK',
-  cancelButtonTitle = 'Cancel',
+  okButtonTitle,
+  cancelButtonTitle,
   ...otherProps
 }) => {
   const mergedOkButton = getOkButton({okButtonTitle, okButton, onClose});

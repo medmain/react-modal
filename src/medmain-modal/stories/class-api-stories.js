@@ -4,6 +4,7 @@ import {action} from '@storybook/addon-actions';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
 import ModalClass from '../modal-class';
+import {Modal} from '../components';
 
 /* Example to be included in "Get Started" section of the documentation */
 const modal = new ModalClass();
@@ -131,7 +132,7 @@ storiesOf('Modal Class API', module)
         action('Answer')(answer);
       }}
     >
-      Call `modal.dialog()`
+      CALL `modal.dialog()`
     </Button>
   ))
   .add('Rendering raw HTML', () => (
@@ -143,6 +144,22 @@ storiesOf('Modal Class API', module)
         action('Answer')(answer);
       }}
     >
-      Show `confirm` modal with HTML
+      CALL `confirm` modal with HTML
     </Button>
-  ));
+  ))
+  .add('Custom class', () => {
+    const customModal = new ModalClass({okButtonTitle: 'Oui', cancelButtonTitle: 'Non'});
+    return (
+      <Fragment>
+        {customModal.createElement()}
+        <Button
+          onClick={async () => {
+            const answer = await customModal.confirm('Really sure?');
+            action('Answer')(answer);
+          }}
+        >
+          CALL `confirm` from custom modal object
+        </Button>
+      </Fragment>
+    );
+  });

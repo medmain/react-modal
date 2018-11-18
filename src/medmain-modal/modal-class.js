@@ -19,17 +19,19 @@ class Modal {
     };
   }
   createElement() {
+    const {okButtonTitle, cancelButtonTitle} = this.options;
+    const enhance = withProps({okButtonTitle, cancelButtonTitle});
     return (
       <ModalProvider>
         <ModalConsumer>
           {({showModal /*hideModal*/}) => {
             // Attach the modal methods now that we have access to `showModal` function
             this.alert = showComponent({
-              Component: withProps({okButtonTitle: this.okButtonTitle})(Alert),
+              Component: enhance(Alert),
               showModal
             });
             this.confirm = showComponent({
-              Component: Confirm,
+              Component: enhance(Confirm),
               showModal
             });
             this.dialog = showDialog({
@@ -46,8 +48,6 @@ const withProps = extraProps => Wrapped => props => Wrapped({...props, ...extraP
 
 const showComponent = ({Component, showModal}) => (message, props = {}) => {
   const style = setModalStyle(props);
-  console.log({style});
-
   return new Promise(resolve => {
     return showModal(Component, {message, style, ...props, onClose: value => resolve(value)});
   });
