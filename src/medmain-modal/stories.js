@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import ReactModal from 'react-modal';
+import {withKnobs, text, boolean, number} from '@storybook/addon-knobs';
 
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
@@ -8,14 +8,12 @@ import {RadiumStarterRoot, RadiumStarter, Button} from 'radium-starter';
 import {DialogButton, Message, Modal, Dialog, Alert, ConfirmDialog} from './components';
 import {ModalProvider, ModalConsumer} from './modal-context';
 import ModalClass from './modal-class';
-import getStyle from './components/style';
 import Slot from './modal-stack-slot';
 
 const MyModal = ({extra, ...otherProps}) => (
   <Modal {...otherProps}>
     <Modal.Title>
-      Art poétique
-      <Button onClick={() => otherProps.onClose(false)}>CLOSE</Button>
+      Art poétique <Button onClick={() => otherProps.onClose(false)}>[X]</Button>
     </Modal.Title>
     <Modal.Body>
       De la musique avant toute chose
@@ -25,8 +23,10 @@ const MyModal = ({extra, ...otherProps}) => (
       {extra}
     </Modal.Body>
     <Modal.Footer>
-      <Button onClick={() => otherProps.onClose(1)}>VALUE 1</Button>{' '}
-      <Button onClick={() => otherProps.onClose(2)}>VALUE 2</Button>
+      <Button onClick={() => otherProps.onClose(1)}>VALUE 1</Button>
+      <Button onClick={() => otherProps.onClose(2)} style={{marginRight: '1rem'}}>
+        VALUE 2
+      </Button>
     </Modal.Footer>
   </Modal>
 );
@@ -83,6 +83,7 @@ storiesOf('Stateless Components', module)
 
 storiesOf('Stateless components - Style variations', module)
   .addDecorator(story => <RadiumStarterRoot>{story()}</RadiumStarterRoot>)
+  .addDecorator(withKnobs)
   .add('ConfirmDialog Component', () => (
     <Wrapper>
       <ConfirmDialog
@@ -92,16 +93,19 @@ storiesOf('Stateless components - Style variations', module)
       />
     </Wrapper>
   ))
-  .add('ConfirmDialog Component, custom width', () => (
-    <Wrapper style={{content: {width: 700}}}>
-      <ConfirmDialog
-        title="Warning"
-        message="Are you sure? (700px)"
-        onClose={action('Modal closed!')}
-        style={{content: {width: 700}}}
-      />
-    </Wrapper>
-  ));
+  .add('ConfirmDialog Component, custom width', () => {
+    const width = number('Width', 700, {min: 200, max: 1000, range: true, step: 20});
+    const padding = number('Padding', 15, {min: 0, max: 50, range: true, step: 5});
+    return (
+      <Wrapper style={{content: {width, padding}}}>
+        <ConfirmDialog
+          title="Warning"
+          message={`Are you sure? (width=${width}, padding=${padding})`}
+          onClose={action('Modal closed!')}
+        />
+      </Wrapper>
+    );
+  });
 
 storiesOf('Modal Class API', module)
   .addDecorator(story => (

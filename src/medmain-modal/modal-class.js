@@ -45,6 +45,8 @@ class Modal {
 
 const showComponent = ({Component, showModal}) => (message, props = {}) => {
   const style = setModalStyle(props);
+  console.log({style});
+
   return new Promise(resolve => {
     return showModal(Component, {message, style, ...props, onClose: value => resolve(value)});
   });
@@ -57,12 +59,14 @@ const showDialog = ({showModal}) => (props = {}) => {
 };
 
 /*
-Convert style properties (width, padding...) into the style object applied to ReactModal
+Convert some optional attributes related to the styling (width, padding...)
+into the style props applied to ReactModal
 */
 const setModalStyle = props => {
-  const {width} = props;
-  const style = width ? {content: {width}} : {};
-  return style;
+  const contentProps = ['width', 'padding'];
+  const reducer = (acc, val) => (props[val] ? {...acc, [val]: props[contentProps]} : acc);
+  const content = contentProps.reduce(reducer, {});
+  return {content};
 };
 
 export default Modal;
