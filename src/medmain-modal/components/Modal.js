@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 import {RadiumStarter, Button} from 'radium-starter';
 import PropTypes from 'prop-types';
 
 import './modal.css';
-import getStyle from './style';
 import DialogButton from './DialogButton';
 
 const Context = React.createContext();
@@ -12,51 +10,38 @@ const Context = React.createContext();
 // do we need to access `onRequestClose` from Dialog.Header?
 
 class Dialog extends React.Component {
-  static Title = ({children}) => {
-    return (
-      <Context.Consumer>
-        {({onRequestClose}) => (
-          <RadiumStarter>
-            {(t, s) => {
-              return (
-                <h3
-                  key="title"
-                  style={[
-                    s.regular,
-                    s.secondaryTextColor,
-                    s.minimumLineHeight,
-                    {marginTop: '-0.25rem', marginBottom: '1.5rem'}
-                  ]}
-                >
-                  {children}
-                </h3>
-              );
-            }}
-          </RadiumStarter>
-        )}
-      </Context.Consumer>
-    );
-  };
   render() {
     const {children, onClose, style, ...otherProps} = this.props;
+    return children;
     return (
       <RadiumStarter>
-        {(t, s) => (
-          <Context.Provider value={otherProps}>
-            {children}
-            {/* <ReactModal
-              {...otherProps}
-              style={getStyle(t, s, style)}
-              onRequestClose={() => onClose(false)}
-            >
-              {children}
-            </ReactModal> */}
-          </Context.Provider>
-        )}
+        {(t, s) => <Context.Provider value={otherProps}>{children}</Context.Provider>}
       </RadiumStarter>
     );
   }
 }
+
+Dialog.Title = ({children}) => {
+  return (
+    <RadiumStarter>
+      {(t, s) => {
+        return (
+          <h3
+            key="title"
+            style={[
+              s.regular,
+              s.secondaryTextColor,
+              s.minimumLineHeight,
+              {marginTop: '-0.25rem', marginBottom: '1.5rem'}
+            ]}
+          >
+            {children}
+          </h3>
+        );
+      }}
+    </RadiumStarter>
+  );
+};
 
 Dialog.Body = ({children}) => <div>{children}</div>;
 

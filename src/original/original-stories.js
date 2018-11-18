@@ -10,10 +10,12 @@ const modal = new Modal();
 
 storiesOf('Original implementation', module)
   .addDecorator(story => (
-    <RadiumStarterRoot>
-      {modal.createElement()}
-      {story()}
-    </RadiumStarterRoot>
+    <div style={{padding: '2rem'}}>
+      <RadiumStarterRoot>
+        {modal.createElement()}
+        {story()}
+      </RadiumStarterRoot>
+    </div>
   ))
   .add('Original example', () => (
     <Button
