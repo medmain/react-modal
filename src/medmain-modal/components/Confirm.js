@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Dialog from './Dialog';
 import {getOkButton, getCancelButton} from './buttons';
 
-const ConfirmDialog = ({
+const Confirm = ({
   okButton,
   cancelButton,
   onClose,
@@ -18,6 +18,6 @@ const ConfirmDialog = ({
   return <Dialog {...otherProps} onClose={onClose} buttons={buttons} />;
 };
 
-ConfirmDialog.propTypes = {};
+Confirm.propTypes = {};
 
-export default ConfirmDialog;
+export default Confirm;

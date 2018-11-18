@@ -9,7 +9,7 @@ a class that provides the following method:
 import React from 'react';
 
 import {ModalConsumer} from './modal-context';
-import {ConfirmDialog, Alert, Dialog} from './components';
+import {Confirm, Alert, Dialog} from './components';
 
 const OK_BUTTON_TITLE = 'OK';
 const CANCEL_BUTTON_TITLE = 'Cancel';
@@ -31,7 +31,7 @@ class Modal {
             showModal
           });
           this.confirm = showComponent({
-            Component: ConfirmDialog,
+            Component: Confirm,
             showModal
           });
           this.dialog = showDialog({
@@ -64,7 +64,7 @@ into the style props applied to ReactModal
 */
 const setModalStyle = props => {
   const contentProps = ['width', 'padding'];
-  const reducer = (acc, val) => (props[val] ? {...acc, [val]: props[contentProps]} : acc);
+  const reducer = (acc, val) => (props[val] ? {...acc, [val]: props[val]} : acc);
   const content = contentProps.reduce(reducer, {});
   return {content};
 };

@@ -1,27 +1,13 @@
 import React from 'react';
-import {RadiumStarter, Button} from 'radium-starter';
+import {RadiumStarter} from 'radium-starter';
 import PropTypes from 'prop-types';
 
 import './modal.css';
 import DialogButton from './DialogButton';
 
-const Context = React.createContext();
+const Modal = ({children}) => children;
 
-// do we need to access `onRequestClose` from Dialog.Header?
-
-class Dialog extends React.Component {
-  render() {
-    const {children, onClose, style, ...otherProps} = this.props;
-    return children;
-    return (
-      <RadiumStarter>
-        {(t, s) => <Context.Provider value={otherProps}>{children}</Context.Provider>}
-      </RadiumStarter>
-    );
-  }
-}
-
-Dialog.Title = ({children}) => {
+Modal.Title = ({children}) => {
   return (
     <RadiumStarter>
       {(t, s) => {
@@ -43,9 +29,9 @@ Dialog.Title = ({children}) => {
   );
 };
 
-Dialog.Body = ({children}) => <div>{children}</div>;
+Modal.Body = ({children}) => <div>{children}</div>;
 
-Dialog.Footer = ({children, ...otherProps}) => {
+Modal.Footer = ({children, ...otherProps}) => {
   return (
     <div
       key="buttons"
@@ -61,12 +47,15 @@ Dialog.Footer = ({children, ...otherProps}) => {
   );
 };
 
-Dialog.ActionBar = ({onClose, buttons}) =>
+/*
+Use to display the button action bar from a definition of "button" objects
+*/
+Modal.ActionBar = ({onClose, buttons}) =>
   buttons.map((props, i) => {
     const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
     return <DialogButton key={props.value} {...props} onClose={onClose} style={style} />;
   });
 
-Dialog.propTypes = {};
+Modal.propTypes = {};
 
-export default Dialog;
+export default Modal;
