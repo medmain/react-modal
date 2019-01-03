@@ -1,5 +1,5 @@
 {
-  "name": "medmain-test-mission-002",
+  "name": "@medmain/react-modal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
