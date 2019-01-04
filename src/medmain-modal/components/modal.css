@@ -1,3 +1,8 @@
+/* 
+Add a fading effect when showing modals
+Not required, but nice to have!
+See `react-modal` package: https://github.com/reactjs/react-modal
+ */
 .ReactModal__Content {
   opacity: 0;
 }
