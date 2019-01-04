@@ -5,23 +5,14 @@ import {action} from '@storybook/addon-actions';
 import {RadiumStarterRoot, RadiumStarter, Button} from 'radium-starter';
 
 import {DialogButton, Message, Modal, Dialog, Alert, Confirm} from '../components';
-import Slot from '../modal-stack-slot';
 import MyModal from './MyModal';
 
-// Wrapper used to be able to pass custom styles to the Modal
-const Wrapper = ({style, children}) => {
-  return (
-    <RadiumStarter>
-      {(t, s) => <Slot isOpen component={() => children} t={t} s={s} style={style} />}
-    </RadiumStarter>
-  );
-};
 
 storiesOf('Stateless Components', module)
   .addDecorator(story => {
     return (
       <RadiumStarterRoot>
-        <RadiumStarter>{(t, s) => <Slot isOpen component={story} t={t} s={s} />}</RadiumStarter>
+        {story()}
       </RadiumStarterRoot>
     );
   })
@@ -68,24 +59,21 @@ storiesOf('Stateless components - Style variations', module)
   .addDecorator(story => <RadiumStarterRoot>{story()}</RadiumStarterRoot>)
   .addDecorator(withKnobs)
   .add('Confirm Component', () => (
-    <Wrapper>
       <Confirm
         title="Warning"
         message="Are you sure? (default width)"
         onClose={action('Modal closed!')}
       />
-    </Wrapper>
   ))
   .add('Confirm Component, custom width', () => {
     const width = number('Width', 700, {min: 200, max: 1000, range: true, step: 20});
     const padding = number('Padding', 15, {min: 0, max: 50, range: true, step: 5});
     return (
-      <Wrapper style={{content: {width, padding}}}>
         <Confirm
           title="Warning"
-          message={`Are you sure? (width=${width}, padding=${padding}`}
+          message={`Are you sure? (width=${width}, padding=${padding})`}
           onClose={action('Modal closed!')}
+          style={{content: {width, padding}}}
         />
-      </Wrapper>
     );
   });
