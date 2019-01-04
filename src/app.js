@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
-// import Modal from './original/original-modal'; // the original implemetation, to compare the results!
-import Modal from './medmain-modal/modal-class';
-const modal = new Modal();
+// import Modal from './original/original-modal'; // the original implementation, to compare the results!
+import ModalManager from './medmain-modal/modal-manager';
+const modal = new ModalManager();
 
 class App extends Component {
   async start() {

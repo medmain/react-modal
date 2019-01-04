@@ -3,11 +3,10 @@ import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
-import ModalClass from '../modal-class';
-import {Modal} from '../components';
+import ModalManager from '../modal-manager';
 
 /* Example to be included in "Get Started" section of the documentation */
-const modal = new ModalClass();
+const modal = new ModalManager();
 
 const GetStarted = () => {
   const start = async () => {
@@ -25,7 +24,7 @@ const GetStarted = () => {
   );
 };
 
-storiesOf('Modal Class API', module)
+storiesOf('ModalManager API', module)
   .addDecorator(story => <div style={{textAlign: 'center', padding: '2rem'}}>{story()}</div>)
   .add('Get Started', GetStarted)
   .addDecorator(story => (
