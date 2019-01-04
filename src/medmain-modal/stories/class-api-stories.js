@@ -135,6 +135,26 @@ storiesOf('Modal Class API', module)
       CALL `modal.dialog()`
     </Button>
   ))
+  .add('.dialog() with `render` attribute', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.dialog({
+          render: ({close}) => {
+            return (
+              <div>
+                <p>Custom Modal Content</p>
+                <p>Using the `render` attribute, `dialog` method can render any React component!</p>
+                <Button onClick={() => close('OK!')}>CLOSE</Button>
+              </div>
+            );
+          }
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Call `modal.dialog()`
+    </Button>
+  ))
   .add('Rendering raw HTML', () => (
     <Button
       onClick={async () => {

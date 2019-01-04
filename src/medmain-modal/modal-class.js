@@ -9,9 +9,9 @@ a class that provides the following method:
 import React from 'react';
 
 import {ModalProvider, ModalConsumer} from './modal-context';
-import {Confirm, Alert, Dialog} from './components';
+import {Confirm, Alert, Dialog, Modal} from './components';
 
-class Modal {
+class ModalManager {
   constructor({okButtonTitle, cancelButtonTitle} = {}) {
     this.options = {
       okButtonTitle,
@@ -54,8 +54,20 @@ const showComponent = ({Component, showModal}) => (message, props = {}) => {
 };
 const showDialog = ({showModal}) => (props = {}) => {
   const style = setModalStyle(props);
+  const {render: CustomDialog} = props; // `render` attribute can be used to render a custom dialog component
   return new Promise(resolve => {
-    return showModal(Dialog, {style, ...props, onClose: value => resolve(value)});
+    const Component = CustomDialog
+      ? ({onClose}) => (
+          <Modal onClose={() => console.log('close')}>
+            <CustomDialog
+              close={value => {
+                resolve(onClose(value))
+              }}
+            />
+          </Modal>
+        )
+      : Dialog;
+    return showModal(Component, {style, ...props, onClose: value => resolve(value)});
   });
 };
 
@@ -70,4 +82,4 @@ const setModalStyle = props => {
   return {content};
 };
 
-export default Modal;
+export default ModalManager;

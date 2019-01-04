@@ -70,6 +70,25 @@ storiesOf('Original implementation', module)
       Call `modal.dialog()`
     </Button>
   ))
+  .add('Calling modal.dialog with render attribute', () => (
+    <Button
+      onClick={async () => {
+        const answer = await modal.dialog({
+          render: ({close}) => {
+            return (
+              <div>
+                GO!
+                <button onClick={() => close('OK!')}>CLOSE</button>
+              </div>
+            );
+          }
+        });
+        action('Answer')(answer);
+      }}
+    >
+      Call `modal.dialog()`
+    </Button>
+  ))
   .add('Calling modal.alert', () => (
     <Button
       onClick={async () => {

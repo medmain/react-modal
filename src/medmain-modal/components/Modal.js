@@ -1,11 +1,21 @@
 import React from 'react';
 import {RadiumStarter} from 'radium-starter';
 import PropTypes from 'prop-types';
+import ReactModal from 'react-modal';
 
 import './modal.css';
 import DialogButton from './DialogButton';
+import getStyle from './style'
 
-const Modal = ({children}) => children;
+const Modal = ({children, style}) => (
+  <RadiumStarter>
+    {(t, s) => (
+      <ReactModal isOpen style={getStyle(t, s, style)}>
+        {children}
+      </ReactModal>
+    )}
+  </RadiumStarter>
+);
 
 Modal.Title = ({children}) => {
   return (
