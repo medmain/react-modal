@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ministate/base": "^0.1.8",
+    "@ministate/react": "^0.1.4",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "radium": "^0.25.0",
