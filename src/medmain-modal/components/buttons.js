@@ -1,4 +1,5 @@
-import {OK_BUTTON_TITLE, CANCEL_BUTTON_TITLE} from './constants';
+const OK_BUTTON_TITLE = 'OK';
+const CANCEL_BUTTON_TITLE = 'Cancel';
 
 export function getOkButton({okButtonTitle = OK_BUTTON_TITLE, okButton, onClose}) {
   return mergeButton({
@@ -24,9 +25,6 @@ export function getCancelButton({cancelButtonTitle = CANCEL_BUTTON_TITLE, cancel
   });
 }
 
-export function processButton({button, onClose}) {
-  return mergeButton({defaultButton: {}, button, onClose});
-}
 
 /*
 Take a default "button" `{title, value, isDefault}`
