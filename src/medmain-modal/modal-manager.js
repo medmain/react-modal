@@ -9,16 +9,25 @@ class ModalManager extends Base {
   state = {
     stack: []
   };
+  constructor(options = {}) {
+    super();
+    // available options: {okButtonTitle, cancelButtonTitle}
+    this.options = options;
+  }
   createElement() {
     const Stack = subscribe(this)(ModalStack);
     return <Stack modalManager={this} />;
   }
   open(component, props) {
+    const enhance = withProps(this.options); // add 2 `***ButtonTitle` props to the component
     return new Promise(resolve => {
       this.setState({
         stack: [
           ...this.state.stack,
-          {component, props: {onClose: value => resolve(value), ...props}}
+          {
+            component: enhance(component),
+            props: {onClose: value => resolve(value), ...props}
+          }
         ]
       });
     });
@@ -48,5 +57,12 @@ class ModalManager extends Base {
     return this.open(Confirm, {...options, message});
   }
 }
+
+/*
+Add some extra props to enhance a given React component
+like `withProps()` from `recompose` package does.
+Used to inject `okButtonTitle` and `cancelButtonTitle` to a given component
+*/
+const withProps = extraProps => Wrapped => props => Wrapped({...props, ...extraProps});
 
 export default ModalManager;
