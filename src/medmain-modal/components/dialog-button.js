@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import {Button} from 'radium-starter';
 
 /*
-Render an action button inside the modal footer
-Provide either a value that will be passed to `onClose` event handler when the button is clicked
-OR a custom `onClick` handler, calling by yourself the `close` argument of the handler
-See storybook example to see the 2 patters!
+Render an action button inside the modal footer.
+Provide:
+- either a value that will be passed to `onClose` event handler when the button is clicked
+- OR a custom `onClick` handler, calling by yourself the `close` argument of the handler
+See storybook example to see the 2 patterns in action!
 */
 const DialogButton = ({onClose, value, title, onClick, isDefault, style}) => {
   // Default onClick handler: the modal will resolve with the `value` property of the button

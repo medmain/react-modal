@@ -5,7 +5,6 @@ import ReactModal from 'react-modal';
 
 import './modal.css';
 import DialogButton from './dialog-button';
-import getStyle from './style';
 
 const Modal = ({children, style, onClose}) => {
   const onRequestClose = () => {
@@ -16,7 +15,7 @@ const Modal = ({children, style, onClose}) => {
   return (
     <RadiumStarter>
       {(t, s) => (
-        <ReactModal isOpen style={getStyle(t, s, style)} onRequestClose={onRequestClose}>
+        <ReactModal isOpen style={mergeStyles(t, s, style)} onRequestClose={onRequestClose}>
           {children}
         </ReactModal>
       )}
@@ -77,5 +76,36 @@ Modal.ActionBar.propTypes = {
   onClose: PropTypes.func.isRequired,
   buttons: PropTypes.array.isRequired
 };
+
+/*
+Given the theme provided by Radium Starter,
+return the style object to be applied to the `<ReactModal>` component
+The object has 2 properties:
+* overlay
+* content
+Reference:
+http://reactcommunity.org/react-modal/styles/
+*/
+function mergeStyles(t, s, ownStyle = {}) {
+  const {overlay, content} = ownStyle;
+  const defaultStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.66)'
+    },
+    content: {
+      width: 500,
+      margin: '0 auto',
+      bottom: 'auto',
+      backgroundColor: t.backgroundColor,
+      ...s.border,
+      ...s.rounded
+    }
+  };
+  const mergedStyle = {
+    overlay: {...defaultStyles.overlay, ...overlay},
+    content: {...defaultStyles.content, ...content}
+  };
+  return mergedStyle;
+}
 
 export default Modal;
