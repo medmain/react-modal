@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from './Modal';
-import Message from './Message';
+import Modal from './modal';
+import Message from './message';
 
 const Dialog = ({onClose, message, title, buttons, ...otherProps}) => {
   return (

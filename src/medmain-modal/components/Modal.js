@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
 import './modal.css';
-import DialogButton from './DialogButton';
+import DialogButton from './dialog-button';
 import getStyle from './style';
 
 const Modal = ({children, style, onClose}) => {

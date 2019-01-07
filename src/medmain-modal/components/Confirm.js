@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Dialog from './Dialog';
-import {getOkButton, getCancelButton} from './buttons';
+import Dialog from './dialog';
+import {getOkButton, getCancelButton} from './ok-cancel-button-helpers';
 
 const Confirm = ({
   okButton,

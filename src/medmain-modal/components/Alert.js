@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Dialog from './Dialog';
-import {getOkButton} from './buttons';
+import Dialog from './dialog';
+import {getOkButton} from './ok-cancel-button-helpers';
 
 const Alert = ({okButton, onClose, okButtonTitle, ...otherProps}) => {
   const mergedOkButton = getOkButton({okButtonTitle, okButton, onClose});

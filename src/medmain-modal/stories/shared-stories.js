@@ -3,6 +3,15 @@ import React, {Fragment} from 'react';
 import {action} from '@storybook/addon-actions';
 import {RadiumStarterRoot, Button} from 'radium-starter';
 
+const LongContent = ({count = 20}) => (
+  <div>
+    <p>This is a very long content, made of {count} lines.</p>
+    {[...Array(count).keys()].map(i => (
+      <p key={i}>This is the paragraph number {i + 1}.</p>
+    ))}
+  </div>
+);
+
 /*
 Run the stories for a given `ModalManager` class
 from either the previous or the new implementation,
@@ -141,6 +150,28 @@ const addModalStories = ({ModalManager, stories}) => {
         Call `modal.dialog()`
       </Button>
     ))
+    .add('.dialog() with `render` attribute and long content', () => (
+      <Button
+        onClick={async () => {
+          const answer = await modal.dialog({
+            width: '800px',
+            maxHeight: '600px',
+            position: 'center',
+            render: ({close}) => {
+              return (
+                <div>
+                  <LongContent count={30} />
+                  <Button onClick={() => close('OK!')}>CLOSE</Button>
+                </div>
+              );
+            }
+          });
+          action('Answer')(answer);
+        }}
+      >
+        Call `modal.dialog()`
+      </Button>
+    ))
     .add('Rendering raw HTML', () => (
       <Button
         onClick={async () => {
@@ -153,8 +184,8 @@ const addModalStories = ({ModalManager, stories}) => {
         CALL `confirm` modal with HTML
       </Button>
     ))
-    .add('Custom class', () => {
-      const customModal = new ModalManager({okButtonTitle: 'Oui', cancelButtonTitle: 'Non'});
+    .add('Custom class constructor', () => {
+      const customModal = new ModalManager({okButtonTitle: () => 'Oui', cancelButtonTitle: 'Non'});
       return (
         <Fragment>
           {customModal.createElement()}
