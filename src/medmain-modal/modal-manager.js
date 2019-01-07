@@ -2,7 +2,7 @@ import React from 'react';
 import Base from '@ministate/base';
 import subscribe from '@ministate/react';
 
-import ModalStack from "./modal-stack";
+import ModalStack from './modal-stack';
 import {Alert, Confirm, Dialog, Modal} from './components';
 
 class ModalManager extends Base {
@@ -13,10 +13,13 @@ class ModalManager extends Base {
     const Stack = subscribe(this)(ModalStack);
     return <Stack modalManager={this} />;
   }
-  open({component, props}) {
+  open(component, props) {
     return new Promise(resolve => {
       this.setState({
-        stack: [...this.state.stack, {component, props}]
+        stack: [
+          ...this.state.stack,
+          {component, props: {onClose: value => resolve(value), ...props}}
+        ]
       });
     });
   }
@@ -36,24 +39,13 @@ class ModalManager extends Base {
           </Modal>
         )
       : Dialog;
-    return this._showComponent(Component, options);
+    return this.open(Component, options);
   }
   alert(message, options) {
-    return this._showComponent(Alert, {...options, message});
+    return this.open(Alert, {...options, message});
   }
   confirm(message, options) {
-    return this._showComponent(Confirm, {...options, message});
-  }
-  /*
-  Private method used by alert(), confirm() and dialog()
-  */
-  _showComponent(component, props) {
-    return new Promise(resolve => {
-      this.open({
-        component,
-        props: {onClose: value => resolve(value), ...props}
-      });
-    });
+    return this.open(Confirm, {...options, message});
   }
 }
 
