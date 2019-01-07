@@ -5,17 +5,24 @@ import ReactModal from 'react-modal';
 
 import './modal.css';
 import DialogButton from './DialogButton';
-import getStyle from './style'
+import getStyle from './style';
 
-const Modal = ({children, style}) => (
-  <RadiumStarter>
-    {(t, s) => (
-      <ReactModal isOpen style={getStyle(t, s, style)}>
-        {children}
-      </ReactModal>
-    )}
-  </RadiumStarter>
-);
+const Modal = ({children, style, onClose}) => {
+  const onRequestClose = () => {
+    // `onRequestClose()` is triggered when "Escape" key is pushed.
+    // In this case, the `dialog()` method will resolve with the boolean `false`.
+    return onClose(false);
+  };
+  return (
+    <RadiumStarter>
+      {(t, s) => (
+        <ReactModal isOpen style={getStyle(t, s, style)} onRequestClose={onRequestClose}>
+          {children}
+        </ReactModal>
+      )}
+    </RadiumStarter>
+  );
+};
 
 Modal.Title = ({children}) => {
   return (

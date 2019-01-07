@@ -34,8 +34,8 @@ class ModalManager extends Base {
     // if `render` attribute is used, a custom component is used instead of the default `Dialog` component
     const Component = CustomDialog
       ? ({onClose}) => (
-          <Modal>
-            <CustomDialog close={value => onClose(value)} />
+          <Modal onClose={onClose}>
+            <CustomDialog close={onClose} />
           </Modal>
         )
       : Dialog;
