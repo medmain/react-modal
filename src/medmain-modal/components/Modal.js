@@ -5,7 +5,7 @@ import ReactModal from 'react-modal';
 
 import DialogButton from './dialog-button';
 
-const Modal = ({children, style, onClose}) => {
+const Modal = ({children, onClose, ...props}) => {
   const onRequestClose = () => {
     // `onRequestClose()` is triggered when "Escape" key is pushed.
     // In this case, the `dialog()` method will resolve with the boolean `false`.
@@ -14,7 +14,7 @@ const Modal = ({children, style, onClose}) => {
   return (
     <RadiumStarter>
       {(t, s) => (
-        <ReactModal isOpen style={mergeStyles(t, s, style)} onRequestClose={onRequestClose}>
+        <ReactModal isOpen style={mergeStyles(t, s, props)} onRequestClose={onRequestClose}>
           {children}
         </ReactModal>
       )}
@@ -85,14 +85,16 @@ The object has 2 properties:
 Reference:
 http://reactcommunity.org/react-modal/styles/
 */
-function mergeStyles(t, s, ownStyle = {}) {
-  const {overlay, content} = ownStyle;
+function mergeStyles(t, s, props = {}) {
+  const {overlay, content} = props.style || {};
+  const {width, maxHeight} = props;
   const defaultStyles = {
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.66)'
     },
     content: {
-      width: 500,
+      width: width || 500,
+      maxHeight,
       margin: '0 auto',
       bottom: 'auto',
       backgroundColor: t.backgroundColor,
