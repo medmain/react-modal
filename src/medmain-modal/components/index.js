@@ -4,5 +4,6 @@ import Dialog from './dialog';
 import DialogButton from './dialog-button';
 import Message from './message';
 import Modal from './modal';
+import TransitionStyles from './transition-styles';
 
-export {Modal, Dialog, DialogButton, Message, Alert, Confirm};
+export {Alert, Confirm, Dialog, DialogButton, Message, Modal, TransitionStyles};

@@ -3,7 +3,7 @@ import Base from '@ministate/base';
 import subscribe from '@ministate/react';
 
 import ModalStack from './modal-stack';
-import {Alert, Confirm, Dialog, Modal} from './components';
+import {Alert, Confirm, Dialog, Modal, TransitionStyles} from './components';
 
 class ModalManager extends Base {
   state = {
@@ -16,7 +16,12 @@ class ModalManager extends Base {
   }
   createElement() {
     const Stack = subscribe(this)(ModalStack);
-    return <Stack modalManager={this} />;
+    return (
+      <>
+        <TransitionStyles />
+        <Stack modalManager={this} />
+      </>
+    );
   }
   open(component, props) {
     const enhance = withProps(this.options); // add 2 `***ButtonTitle` props to the component

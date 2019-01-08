@@ -3,7 +3,6 @@ import {RadiumStarter} from 'radium-starter';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
-import './modal.css';
 import DialogButton from './dialog-button';
 
 const Modal = ({children, style, onClose}) => {
