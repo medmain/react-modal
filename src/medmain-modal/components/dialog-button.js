@@ -15,7 +15,7 @@ const DialogButton = ({onClose, value, title, onClick, isDefault, style}) => {
     onClose(value);
   };
   // When a custom onClick handler is provided, the user calls close passing a value.
-  // the modal will resolve with the value provided
+  // the modal will resolve with the provider value
   const customOnClick = () => {
     onClick({
       close: value => {
@@ -26,7 +26,6 @@ const DialogButton = ({onClose, value, title, onClick, isDefault, style}) => {
   const mergedOnClick = onClick ? customOnClick : defaultOnClick;
   return (
     <Button
-      key={value}
       onClick={mergedOnClick}
       style={style}
       rsPrimary={isDefault}

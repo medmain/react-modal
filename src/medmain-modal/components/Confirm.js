@@ -11,9 +11,10 @@ const Confirm = ({
   cancelButtonTitle,
   ...otherProps
 }) => {
-  const mergedOkButton = getOkButton({okButtonTitle, okButton, onClose});
-  const mergedCancelButton = getCancelButton({cancelButtonTitle, cancelButton, onClose});
-  const buttons = [mergedOkButton, mergedCancelButton];
+  const buttons = [
+    getOkButton({okButtonTitle, okButton, onClose}),
+    getCancelButton({cancelButtonTitle, cancelButton, onClose})
+  ];
   return <Dialog {...otherProps} onClose={onClose} buttons={buttons} />;
 };
 

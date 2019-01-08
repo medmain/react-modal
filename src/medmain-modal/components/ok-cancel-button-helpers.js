@@ -1,6 +1,9 @@
 const OK_BUTTON_TITLE = 'OK';
 const CANCEL_BUTTON_TITLE = 'Cancel';
 
+/*
+Export 2 helpers called by `Alert` and `Confirm` components
+*/
 export function getOkButton({okButtonTitle = OK_BUTTON_TITLE, okButton, onClose}) {
   return mergeButton({
     defaultButton: {
@@ -27,9 +30,9 @@ export function getCancelButton({cancelButtonTitle = CANCEL_BUTTON_TITLE, cancel
 
 
 /*
-Take a default "button" `{title, value, isDefault}`
+Take a default "button" object `{title, value, isDefault}`
 related to a given type of modal (E.g. OK or Cancel button),
-a button provided by the user {title, value or onClick, isDefault} and merge everything,
+a button object provided by the user {title, value or onClick, isDefault} and merge everything,
 returning the button object to be used in the modal.
 */
 function mergeButton({defaultButton, button, onClose}) {

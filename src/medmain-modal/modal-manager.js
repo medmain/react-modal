@@ -46,6 +46,7 @@ class ModalManager extends Base {
   }
   dialog({render: CustomDialog, ...options}) {
     // if `render` attribute is used, a custom component is used instead of the default `Dialog` component
+    // a `close` props is provided to let the user close the modal by herself.
     const Component = CustomDialog
       ? ({onClose}) => (
           <Modal onClose={onClose} {...options}>
