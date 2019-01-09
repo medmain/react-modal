@@ -1,0 +1,28 @@
+{
+  "@import": "medmain/npm-package#^0.1.0",
+  "name": "@medmain/react-modal",
+  "version": "0.1.0",
+  "description": "Modal dialog component for React (using Radium and Radium Starter)",
+  "author": "Michael Rambeau <michael@medmain.com>",
+  "license": "MIT",
+  "repository": "https://github.com/medmain/react-modal.git",
+  "dependencies": {
+    "@ministate/base": "^0.1.8",
+    "@ministate/react": "^0.1.4",
+    "prop-types": "^15.6.2",
+    "radium": "^0.25.0",
+    "radium-starter": "^0.11.8",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-modal": "^3.6.1"
+  },
+  "cjsTranspiler": {
+    "transformJSX": true
+  },
+  "esmTranspiler": {
+    "transformJSX": true
+  },
+  "browserTranspiler": {
+    "transformJSX": true
+  }
+}

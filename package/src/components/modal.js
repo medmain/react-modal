@@ -98,6 +98,7 @@ function mergeStyles(t, s, props = {}) {
       margin: '0 auto',
       bottom: 'auto',
       backgroundColor: t.backgroundColor,
+      display: 'flex',
       ...s.border,
       ...s.rounded
     }
