@@ -87,7 +87,7 @@ http://reactcommunity.org/react-modal/styles/
 */
 function mergeStyles(t, s, props = {}) {
   const {overlay, content} = props.style || {};
-  const {width, maxHeight} = props;
+  const {width, maxHeight, position} = props;
   const defaultStyles = {
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.66)'
@@ -96,9 +96,10 @@ function mergeStyles(t, s, props = {}) {
       width: width || 500,
       maxHeight,
       margin: '0 auto',
-      bottom: 'auto',
+      bottom: position === 'center' ? 40 : 'auto',
       backgroundColor: t.backgroundColor,
       display: 'flex',
+      flexDirection: 'column',
       ...s.border,
       ...s.rounded
     }
