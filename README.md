@@ -2,7 +2,7 @@
 
 React Modal components used by Medmain frontend applications.
 
-See ./package/README.md for the package documentation.
+See [/package/README.md](https://github.com/medmain/react-modal/tree/master/package) for the package documentation.
 
 ## Development environment
 
