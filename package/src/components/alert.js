@@ -1,11 +1,13 @@
-import React from 'react';
+// This should be removed
 
-import Dialog from './dialog';
-import {getOkButton} from './ok-cancel-button-helpers';
+// import React from 'react';
 
-const Alert = ({okButton, onClose, okButtonTitle, ...otherProps}) => {
-  const buttons = [getOkButton({okButtonTitle, okButton, onClose})];
-  return <Dialog {...otherProps} onClose={onClose} buttons={buttons} />;
-};
+// import Dialog from './dialog';
+// import {getOkButton} from './ok-cancel-button-helpers';
 
-export default Alert;
+// const Alert = ({okButton, onClose, okButtonTitle, ...otherProps}) => {
+//   const buttons = [getOkButton({okButtonTitle, okButton, onClose})];
+//   return <Dialog {...otherProps} onClose={onClose} buttons={buttons} />;
+// };
+
+// export default Alert;

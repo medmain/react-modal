@@ -3,7 +3,7 @@ import {RadiumStarter} from 'radium-starter';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
-const ModalContainer = ({onClose, children, ...props}) => {
+export const Container = ({onClose, children, ...props}) => {
   return (
     <RadiumStarter>
       {(t, s) => (
@@ -19,7 +19,7 @@ const ModalContainer = ({onClose, children, ...props}) => {
     </RadiumStarter>
   );
 };
-ModalContainer.propTypes = {
+Container.propTypes = {
   onClose: PropTypes.func,
   children: PropTypes.node
 };
@@ -53,5 +53,3 @@ function generateStyle(t, s, props = {}) {
   };
   return style;
 }
-
-export default ModalContainer;

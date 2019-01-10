@@ -1,5 +1,1 @@
-import ModalManager from './modal-manager';
-
-export {ModalManager};
-
-export default ModalManager;
+export {Modal, Modal as default} from './modal';

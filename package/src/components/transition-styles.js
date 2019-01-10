@@ -7,7 +7,7 @@ See `react-modal` package:
 https://github.com/reactjs/react-modal/blob/921358e62e35c83775104d99edb258dad9cbbd05/docs/styles/transitions.md
 */
 
-const TransitionStyles = () => {
+export const TransitionStyles = () => {
   return (
     <Style
       rules={{
@@ -21,5 +21,3 @@ const TransitionStyles = () => {
     />
   );
 };
-
-export default TransitionStyles;
