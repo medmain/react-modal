@@ -4,6 +4,7 @@ import subscribe from '@ministate/react';
 
 import {Stack} from './components/stack';
 import {TransitionStyles} from './components/transition-styles';
+import {getOkButton, getCancelButton} from './components/ok-cancel-button-helpers';
 
 export class Modal extends Base {
   constructor(options = {}) {
@@ -28,19 +29,25 @@ export class Modal extends Base {
     return this.open(options);
   }
 
-  // alert(message, options) {
-  //   const actualOptions = {
-  //     // TODO
-  //   };
-  //   return this.dialog(actualOptions);
-  // }
+  alert(message, {okButton, okButtonTitle} = {}) {
+    const options = {
+      message,
+      buttons: [getOkButton({okButtonTitle, okButton, onClose: this.close})]
+    };
+    return this.dialog(options);
+  }
 
-  // confirm(message, options) {
-  //   const actualOptions = {
-  //     // TODO
-  //   };
-  //   return this.dialog(actualOptions);
-  // }
+  confirm(message, {okButton, okButtonTitle, cancelTitle, cancelButton} = {}) {
+    const buttons = [
+      getOkButton({okButtonTitle, okButton, onClose: this.close}),
+      getCancelButton({cancelTitle, cancelButton, onClose: this.close})
+    ];
+    const options = {
+      message,
+      buttons
+    };
+    return this.dialog(options);
+  }
 
   open(options) {
     return new Promise(resolve => {
