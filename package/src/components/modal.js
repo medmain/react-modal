@@ -26,6 +26,10 @@ const Modal = ({children, onClose, ...props}) => {
     </RadiumStarter>
   );
 };
+Modal.propTypes = {
+  onClose: PropTypes.func,
+  children: PropTypes.node
+};
 
 Modal.Title = ({children}) => {
   return (
@@ -48,8 +52,14 @@ Modal.Title = ({children}) => {
     </RadiumStarter>
   );
 };
+Modal.Title.propTypes = {
+  children: PropTypes.node
+};
 
 Modal.Body = ({children}) => <div>{children}</div>;
+Modal.Body.propTypes = {
+  children: PropTypes.node
+};
 
 Modal.Footer = ({children, ...otherProps}) => {
   return (
@@ -66,6 +76,9 @@ Modal.Footer = ({children, ...otherProps}) => {
     </div>
   );
 };
+Modal.Footer.propTypes = {
+  children: PropTypes.node
+};
 
 /*
 Use to display the button action bar from a definition of "button" objects
@@ -75,7 +88,6 @@ Modal.ActionBar = ({onClose, buttons}) =>
     const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
     return <DialogButton key={props.value} {...props} onClose={onClose} style={style} />;
   });
-
 Modal.ActionBar.propTypes = {
   onClose: PropTypes.func.isRequired,
   buttons: PropTypes.array.isRequired

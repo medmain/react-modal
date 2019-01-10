@@ -43,8 +43,11 @@ const renderText = text => (typeof text === 'function' ? text() : text);
 
 DialogButton.propTypes = {
   onClose: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   onClick: PropTypes.func,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired
+  isDefault: PropTypes.bool,
+  style: PropTypes.object
 };
 
 export default DialogButton;

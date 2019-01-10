@@ -9,10 +9,12 @@ class ModalManager extends Base {
   state = {
     stack: []
   };
+
   constructor(options = {}) {
     super();
     this.options = options; // available options: {okButtonTitle, cancelButtonTitle}
   }
+
   createElement() {
     const Stack = subscribe(this)(ModalStack);
     return (
@@ -22,6 +24,7 @@ class ModalManager extends Base {
       </>
     );
   }
+
   open(component, props) {
     const enhance = withProps(this.options); // add 2 `***ButtonTitle` props to the component
     return new Promise(resolve => {
@@ -36,6 +39,7 @@ class ModalManager extends Base {
       });
     });
   }
+
   close() {
     if (this.state.stack.length) {
       this.setState({
@@ -43,21 +47,24 @@ class ModalManager extends Base {
       });
     }
   }
+
   dialog({render: CustomDialog, ...options}) {
     // if `render` attribute is used, a custom component is used instead of the default `Dialog` component
     // a `close` props is provided to let the user close the modal by herself.
-    const Component = CustomDialog
-      ? ({onClose}) => (
-          <Modal onClose={onClose} {...options}>
-            <CustomDialog close={onClose} />
-          </Modal>
-        )
-      : Dialog;
+    const Component = CustomDialog ?
+      ({onClose}) => (
+        <Modal onClose={onClose} {...options}>
+          <CustomDialog close={onClose} />
+        </Modal>
+      ) :
+      Dialog;
     return this.open(Component, options);
   }
+
   alert(message, options) {
     return this.open(Alert, {...options, message});
   }
+
   confirm(message, options) {
     return this.open(Confirm, {...options, message});
   }

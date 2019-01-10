@@ -28,7 +28,6 @@ export function getCancelButton({cancelButtonTitle = CANCEL_BUTTON_TITLE, cancel
   });
 }
 
-
 /*
 Take a default "button" object `{title, value, isDefault}`
 related to a given type of modal (E.g. OK or Cancel button),
@@ -36,12 +35,12 @@ a button object provided by the user {title, value or onClick, isDefault} and me
 returning the button object to be used in the modal.
 */
 function mergeButton({defaultButton, button, onClose}) {
-  const merged = button
-    ? {
-        ...defaultButton,
-        ...button
-      }
-    : defaultButton;
+  const merged = button ?
+    {
+      ...defaultButton,
+      ...button
+    } :
+    defaultButton;
   // Default onClick handler: the modal will resolve with the `value` property of the button
   const defaultOnClick = () => {
     onClose(merged.value);

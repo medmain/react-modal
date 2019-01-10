@@ -1,9 +1,9 @@
 import React from 'react';
 import {Style} from 'radium';
 
-/* 
+/*
 implement transitions for when the modal is opened or closed.
-See `react-modal` package: 
+See `react-modal` package:
 https://github.com/reactjs/react-modal/blob/921358e62e35c83775104d99edb258dad9cbbd05/docs/styles/transitions.md
 */
 
