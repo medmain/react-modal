@@ -14,7 +14,12 @@ const Modal = ({children, onClose, ...props}) => {
   return (
     <RadiumStarter>
       {(t, s) => (
-        <ReactModal isOpen style={mergeStyles(t, s, props)} onRequestClose={onRequestClose}>
+        <ReactModal
+          isOpen
+          style={mergeStyles(t, s, props)}
+          onRequestClose={onRequestClose}
+          ariaHideApp={false}
+        >
           {children}
         </ReactModal>
       )}

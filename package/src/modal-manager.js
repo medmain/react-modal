@@ -11,8 +11,7 @@ class ModalManager extends Base {
   };
   constructor(options = {}) {
     super();
-    // available options: {okButtonTitle, cancelButtonTitle}
-    this.options = options;
+    this.options = options; // available options: {okButtonTitle, cancelButtonTitle}
   }
   createElement() {
     const Stack = subscribe(this)(ModalStack);

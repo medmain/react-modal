@@ -1,7 +1,9 @@
 import React from 'react';
 
 const ModalStack = ({modalManager}) => {
-  const stack = modalManager.state.stack;
+  const {
+    state: {stack},
+  } = modalManager;
   return stack.length
     ? stack.map(({component: Component, props}, index) => {
         const {onClose} = props;
@@ -9,7 +11,7 @@ const ModalStack = ({modalManager}) => {
           modalManager.close();
           onClose(value);
         };
-        return <Component {...props} onClose={mergedOnClose}  key={index} />;
+        return <Component {...props} onClose={mergedOnClose} key={index} />;
       })
     : null;
 };
