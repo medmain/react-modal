@@ -6,13 +6,14 @@ import ModalStack from './modal-stack';
 import {Alert, Confirm, Dialog, Modal, TransitionStyles} from './components';
 
 class ModalManager extends Base {
-  state = {
-    stack: []
-  };
-
   constructor(options = {}) {
     super();
+
     this.options = options; // available options: {okButtonTitle, cancelButtonTitle}
+
+    this.state = {
+      stack: []
+    };
   }
 
   createElement() {
@@ -26,7 +27,7 @@ class ModalManager extends Base {
   }
 
   open(component, props) {
-    const enhance = withProps(this.options); // add 2 `***ButtonTitle` props to the component
+    const enhance = withProps(this.options); // add 2 `***ButtonTitle` props to the component // TODO
     return new Promise(resolve => {
       this.setState({
         stack: [
@@ -48,16 +49,25 @@ class ModalManager extends Base {
     }
   }
 
-  dialog({render: CustomDialog, ...options}) {
-    // if `render` attribute is used, a custom component is used instead of the default `Dialog` component
+  dialog({render: CustomContent, ...options}) {
+    // if `render` attribute is used, a custom content is used instead of the default `Dialog` component
     // a `close` props is provided to let the user close the modal by herself.
-    const Component = CustomDialog ?
-      ({onClose}) => (
-        <Modal onClose={onClose} {...options}>
-          <CustomDialog close={onClose} />
-        </Modal>
-      ) :
-      Dialog;
+    // const Component = CustomDialog ?
+    //   ({onClose}) => (
+    //     <Modal onClose={onClose} {...options}>
+    //       <CustomDialog close={onClose} />
+    //     </Modal>
+    //   ) :
+    //   Dialog;
+
+    const close = value => this.close(value);
+
+    const Component = (
+      <ModalContainer onClose={close}>
+        <CustomContent close={close} />
+      </ModalContainer>
+    );
+
     return this.open(Component, options);
   }
 
