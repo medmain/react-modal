@@ -3,18 +3,32 @@ import {RadiumStarter} from 'radium-starter';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
+import {Style} from 'radium';
+
 export const Container = ({onClose, children, ...props}) => {
   return (
     <RadiumStarter>
       {(t, s) => (
-        <ReactModal
-          isOpen
-          style={generateStyle(t, s, props)}
-          onRequestClose={onClose}
-          ariaHideApp={false}
-        >
-          {children}
-        </ReactModal>
+        <>
+          <Style
+            rules={{
+              '.ReactModal__Content': {opacity: 0},
+              '.ReactModal__Content--after-open': {
+                opacity: 1,
+                transition: 'opacity 0.5s ease-in'
+              },
+              '.ReactModal__Content--before-close': {opacity: 0}
+            }}
+          />
+          <ReactModal
+            isOpen
+            style={generateStyle(t, s, props)}
+            onRequestClose={onClose}
+            ariaHideApp={false}
+          >
+            {children}
+          </ReactModal>
+        </>
       )}
     </RadiumStarter>
   );

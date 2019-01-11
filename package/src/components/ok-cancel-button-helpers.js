@@ -1,10 +1,7 @@
-const OK_BUTTON_TITLE = 'OK';
-const CANCEL_BUTTON_TITLE = 'Cancel';
-
 /*
-Export 2 helpers called by `Alert` and `Confirm` components
+Export 2 helpers called by `alert()` and `confirm()` methods
 */
-export function getOkButton({okButtonTitle = OK_BUTTON_TITLE, okButton, onClose}) {
+export function getOkButton({okButtonTitle, okButton, onClose}) {
   return mergeButton({
     defaultButton: {
       title: okButtonTitle,
@@ -16,7 +13,7 @@ export function getOkButton({okButtonTitle = OK_BUTTON_TITLE, okButton, onClose}
   });
 }
 
-export function getCancelButton({cancelButtonTitle = CANCEL_BUTTON_TITLE, cancelButton, onClose}) {
+export function getCancelButton({cancelButtonTitle, cancelButton, onClose}) {
   return mergeButton({
     defaultButton: {
       title: cancelButtonTitle,
@@ -45,7 +42,7 @@ function mergeButton({defaultButton, button, onClose}) {
   const defaultOnClick = () => {
     onClose(merged.value);
   };
-  // When a custom onClick handler is provided, the user calls close passing a value.
+  // When a custom onClick handler is provided, the user calls `close()` passing a value.
   // the modal will resolve with the value provided
   const customOnClick = () => {
     button.onClick({
