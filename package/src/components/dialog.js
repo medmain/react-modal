@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {RadiumStarter} from 'radium-starter';
 
-// import Modal from './modal';
 import Message from './message';
 import DialogButton from './dialog-button';
 
-// export const Dialog = ({close}) => <button onClick={() => close(true)}>Close from Dialog</button>;
 export const Dialog = ({close, title, message, buttons}) => (
   <div>
     {title && <Dialog.Title>{title}</Dialog.Title>}
@@ -89,24 +87,3 @@ Dialog.ActionBar.propTypes = {
   onClose: PropTypes.func.isRequired,
   buttons: PropTypes.array.isRequired
 };
-
-// const Dialog = ({onClose, message, title, buttons, ...otherProps}) => {
-//   return (
-//     <Modal onClose={onClose} {...otherProps}>
-//       {title && <Modal.Title>{title}</Modal.Title>}
-//       <Modal.Body>
-//         <Message text={message} />
-//       </Modal.Body>
-//       {buttons && (
-//         <Modal.Footer>
-//           <Modal.ActionBar onClose={onClose} buttons={buttons} />
-//         </Modal.Footer>
-//       )}
-//     </Modal>
-//   );
-// };
-
-// Dialog.propTypes = {
-//   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-//   onClose: PropTypes.func.isRequired
-// };

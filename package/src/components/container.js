@@ -10,6 +10,7 @@ export const Container = ({onClose, children, ...props}) => {
     <RadiumStarter>
       {(t, s) => (
         <>
+          {/* Add transition effect, see https://github.com/reactjs/react-modal/blob/921358e62e35c83775104d99edb258dad9cbbd05/docs/styles/transitions.md */}
           <Style
             rules={{
               '.ReactModal__Content': {opacity: 0},
