@@ -8,7 +8,7 @@ export const Stack = ({modal}) => {
     const {render, ...otherOptions} = options;
     const Content = render || Dialog;
     return (
-      <Container key={index} onClose={modal.close}>
+      <Container key={index} onClose={modal.close} {...otherOptions}>
         <Content {...otherOptions} close={modal.close} />
       </Container>
     );

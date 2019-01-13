@@ -26,15 +26,16 @@ export class Modal extends Base {
     return this.open(options);
   }
 
-  alert(message, {okButton} = {}) {
+  alert(message, {okButton, ...otherOptions} = {}) {
     const options = {
+      ...otherOptions,
       message,
       buttons: [getOkButton({okButton, okButtonTitle: this.okButtonTitle, onClose: this.close})]
     };
     return this.dialog(options);
   }
 
-  confirm(message, {okButton, cancelButton} = {}) {
+  confirm(message, {okButton, cancelButton, ...otherOptions} = {}) {
     const buttons = [
       getOkButton({okButtonTitle: this.okButtonTitle, okButton, onClose: this.close}),
       getCancelButton({
@@ -44,6 +45,7 @@ export class Modal extends Base {
       })
     ];
     const options = {
+      ...otherOptions,
       message,
       buttons
     };
