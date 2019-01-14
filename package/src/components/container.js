@@ -43,13 +43,12 @@ Container.propTypes = {
 };
 
 /*
-Given the theme provided by Radium Starter,
+Given the theme provided by Radium Starter and properties provided by the user
 return the style object to be applied to the `<ReactModal>` component
 The object has 2 properties:
 * overlay
 * content
-Reference:
-http://reactcommunity.org/react-modal/styles/
+Reference: http://reactcommunity.org/react-modal/styles/
 */
 function generateStyle(t, s, props = {}) {
   const {width, maxHeight, position} = props;

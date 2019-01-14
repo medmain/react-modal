@@ -32,9 +32,7 @@ const GetStarted = () => {
 - `.alert()` method
 - `.dialog()` method
 
-### Details
-
-#### Constructor
+### Constructor
 
 Create an instance of the Modal class, setting the default labels of the OK and Cancel buttons.
 
@@ -49,10 +47,10 @@ const modal = new Modal(options);
 | okButtonTitle     | string or function | `"OK"`        | Label of the primary button, used to confirm the action |
 | cancelButtonTitle | string or function | `"Cancel"`    | Label of the button used to cancel the action           |
 
-#### `dialog(options)` method
+### `dialog(options)` method
 
-Display a dialog with a title, a message and any group of buttons.
-Resolve with any value associated with the buttons.
+Display a modal window with a title, a message and the buttons provided by the user.
+Resolve with any value associated with the button pushed to close the 
 
 ```js
 const answer = await modal.dialog(options);
@@ -60,17 +58,52 @@ const answer = await modal.dialog(options);
 
 One argument: an `options` object with the following properties:
 
-| Key     | Type               | Default value | Description                                     |
-| ------- | ------------------ | ------------- | ----------------------------------------------- |
-| title   | String             | undefined     | Title of the modal window                       |
-| message | String or function | undefined     | Message displayed in the modal, under the title |
-| width   | String             | undefined     | Style width attribute E.g. `"400px"`            |
-| padding | String             | undefined     | Style padding attribute E.g. `"1rem"`           |
-| buttons | Array              | []            | Array of buttons objects                        |
+| Key     | Type               | Default value | Description                                                        |
+| ------- | ------------------ | ------------- | ------------------------------------------------------------------ |
+| title   | String             | undefined     | Title of the modal window                                          |
+| message | String or function | undefined     | Message displayed in the modal, under the title                    |
+| width   | String             | undefined     | Style width attribute E.g. `"400px"`                               |
+| padding | String             | undefined     | Style padding attribute E.g. `"1rem"`                              |
+| buttons | Array              | []            | Array of buttons objects                                           |
+| render  | React component    | undefined     | Custom component to be displayed instead of the built-in component |
 
-The 2 following methods `confirm` and `alert` extend `dialog` behavior and can be considered as handy "shortcut" to perform some tasks.
+There are 2 ways to call the `dialog()` method:
 
-#### `alert(message, options)` method
+* Using the built-in dialog component, the user provides the `title`, the `message` and the `buttons` attributes.
+* Using the `render` attribute, the user provides the component to be displayed. The component accepts a `close` props to let the user close the modal.
+
+#### Example of "built-in" component
+
+```js
+const answer = await modal.dialog({
+  title: 'Please confirm',
+  message: 'Is it OK?',
+  buttons: [
+    {value: 1, title: 'Option 1'},
+    {value: 2, title: 'Option 2', isDefault: true}
+  ]
+});
+console.info(answer);
+}}
+```
+
+#### Example of custom component, using the `render` attribute
+
+```js
+const answer = await modal.dialog({
+  render: ({close}) => <div>
+    <p>This dialog renders a custom component.</p>
+    <Button onClick={() => close('A')}>Option A</Button>
+    {' '}
+    <Button onClick={() => close('B')}>Option B</Button>
+    </div>
+});
+console.info(answer);
+```
+
+The 2 following methods `confirm` and `alert` extend `dialog` behavior and can be considered as handy "shortcut" to perform some usual tasks.
+
+### `alert(message, options)` method
 
 Display a modal window with a single button that closes the window.
 Return a Promise that resolves when the modal is closed.
@@ -93,7 +126,7 @@ Arguments:
 | padding  | String        | undefined         | Style padding attribute E.g. `"1rem"`                             |
 | okButton | button object | Default OK button | Button object to override the behavior of the default "OK" button |
 
-#### `confirm(message, options)` method
+### `confirm(message, options)` method
 
 Display a modal window with a given message and 2 buttons.
 
@@ -148,9 +181,9 @@ For every button, provide either a `value` or a custom `onClick` handler, callin
 }
 ```
 
-| Key       | Type                       | Default value | Description                                                                  |
-| --------- | -------------------------- | ------------- | ---------------------------------------------------------------------------- |
-| value     | Any                        | true          | Value resolved by the Promise modal when clicked                             |
-| title     | String or function         | undefined     | Button label as a string or a function `() => <span>OK</span>`               |
-| onClick   | Function `({close}) => {}` | undefined     | Function called to customize the behavior when the button is clicked         |
+| Key       | Type                       | Default value | Description                                                                 |
+| --------- | -------------------------- | ------------- | --------------------------------------------------------------------------- |
+| value     | Any                        | true          | Value resolved by the Promise modal when clicked                            |
+| title     | String or function         | undefined     | Button label as a string or a function `() => <span>OK</span>`              |
+| onClick   | Function `({close}) => {}` | undefined     | Function called to customize the behavior when the button is clicked        |
 | isDefault | Boolean                    | false         | Set to true to assign primary button style and listen to keyboard ENTER key |
