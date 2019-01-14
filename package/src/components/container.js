@@ -24,7 +24,10 @@ export const Container = ({onClose, children, ...props}) => {
           <ReactModal
             isOpen
             style={generateStyle(t, s, props)}
-            onRequestClose={onClose}
+            onRequestClose={() => {
+              // resolve with the boolean `false` if Escape key is pushed
+              return onClose(false);
+            }}
             ariaHideApp={false}
           >
             {children}
