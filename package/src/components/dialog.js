@@ -10,7 +10,7 @@ export const Dialog = ({close, title, message, buttons}) => (
     </DialogBody>
     {buttons && (
       <DialogFooter>
-        <DialogActionBar onClose={close} buttons={buttons} />
+        <DialogActionBar close={close} buttons={buttons} />
       </DialogFooter>
     )}
   </div>
@@ -70,35 +70,46 @@ DialogFooter.propTypes = {
 };
 
 /*
-Render an action button inside the modal footer.
-Provide:
-- either a value that will be passed to `onClose` event handler when the button is clicked
-- OR a custom `onClick` handler, calling by yourself the `close` argument of the handler
-See storybook example to see the 2 patterns in action!
+Use to display the button action bar from a definition of "button" objects
 */
-const DialogButton = ({onClose, value, title, onClick, isDefault, style}) => {
+const DialogActionBar = ({close, buttons}) =>
+  buttons.map((button, index) => {
+    const style = index > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
+    return <DialogButton key={index} close={close} {...button} style={style} />;
+  });
+DialogActionBar.propTypes = {
+  close: PropTypes.func.isRequired,
+  buttons: PropTypes.array.isRequired
+};
+
+/*
+Render an action button inside the modal footer.
+*/
+const DialogButton = ({close, value, title, onClick: customOnClick, isDefault, style}) => {
   // Default onClick handler: the modal will resolve with the `value` property of the button
-  let actualOnClose = () => onClose(value);
+  let onClick = () => {
+    close(value);
+  };
   // When a custom `onClick` handler is provided, the user calls close passing a value.
   // the modal will resolve with the provider value
-  if (onClick) {
-    actualOnClose = () => {
-      onClick({onClose: close});
+  if (customOnClick) {
+    onClick = () => {
+      customOnClick({close});
     };
   }
   return (
     <Button
-      onClick={actualOnClose}
-      style={style}
+      onClick={onClick}
       rsPrimary={isDefault}
       autoFocus={isDefault /* to let user validate with Enter key */}
+      style={style}
     >
       {renderText(title)}
     </Button>
   );
 };
 DialogButton.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
   value: PropTypes.any,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   onClick: PropTypes.func,
@@ -110,16 +121,3 @@ DialogButton.propTypes = {
 Render either a String or a function that returns JSX code (part of the current API)
 */
 const renderText = text => (typeof text === 'function' ? text() : text);
-
-/*
-Use to display the button action bar from a definition of "button" objects
-*/
-const DialogActionBar = ({onClose, buttons}) =>
-  buttons.map((props, i) => {
-    const style = i > 0 ? {marginRight: '.75rem'} : {}; // add space between buttons
-    return <DialogButton key={props.value} {...props} onClose={onClose} style={style} />;
-  });
-DialogActionBar.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  buttons: PropTypes.array.isRequired
-};

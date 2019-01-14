@@ -1,4 +1,4 @@
-# React Modal by Medmain
+# Medmain's React Modal
 
 `Modal` class can display a dialog window to ask for confirmation or to notify the user about an important action.
 
@@ -28,9 +28,9 @@ const GetStarted = () => {
 ### Overview
 
 - Constructor
+- `.dialog()` method
 - `.confirm()` method
 - `.alert()` method
-- `.dialog()` method
 
 ### Constructor
 
@@ -50,7 +50,7 @@ const modal = new Modal(options);
 ### `dialog(options)` method
 
 Display a modal window with a title, a message and the buttons provided by the user.
-Resolve with any value associated with the button pushed to close the 
+Resolve with any value associated with the button pushed to close the
 
 ```js
 const answer = await modal.dialog(options);
@@ -69,8 +69,8 @@ One argument: an `options` object with the following properties:
 
 There are 2 ways to call the `dialog()` method:
 
-* Using the built-in dialog component, the user provides the `title`, the `message` and the `buttons` attributes.
-* Using the `render` attribute, the user provides the component to be displayed. The component accepts a `close` props to let the user close the modal.
+- Using the built-in dialog component, the user provides the `title`, the `message` and the `buttons` attributes.
+- Using the `render` attribute, the user provides the component to be displayed. The component accepts a `close` props to let the user close the modal.
 
 #### Example of "built-in" component
 
@@ -91,12 +91,13 @@ console.info(answer);
 
 ```js
 const answer = await modal.dialog({
-  render: ({close}) => <div>
-    <p>This dialog renders a custom component.</p>
-    <Button onClick={() => close('A')}>Option A</Button>
-    {' '}
-    <Button onClick={() => close('B')}>Option B</Button>
+  render: ({close}) => (
+    <div>
+      <p>This dialog renders a custom component.</p>
+      <Button onClick={() => close('A')}>Option A</Button>
+      <Button onClick={() => close('B')}>Option B</Button>
     </div>
+  )
 });
 console.info(answer);
 ```

@@ -3,7 +3,7 @@
   "name": "@medmain/react-modal",
   "version": "0.1.0",
   "description": "Modal dialog component for React (using Radium and Radium Starter)",
-  "author": "Michael Rambeau <michael@medmain.com>",
+  "contributors": ["Michael Rambeau <michael@medmain.com>", "Manuel Vila <hi@mvila.me>"],
   "license": "MIT",
   "repository": "https://github.com/medmain/react-modal.git",
   "dependencies": {
