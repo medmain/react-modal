@@ -10,7 +10,7 @@
     "@ministate/base": "^0.1.8",
     "@ministate/react": "^0.1.4",
     "prop-types": "^15.6.2",
-    "radium": "^0.25.0",
+    "radium": "^0.24.0",
     "radium-starter": "^0.11.8",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",

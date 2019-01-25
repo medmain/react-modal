@@ -54,7 +54,8 @@ function generateStyle(t, s, props = {}) {
   const {width, maxHeight, position} = props;
   const style = {
     overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.66)'
+      backgroundColor: 'rgba(0, 0, 0, 0.66)',
+      zIndex: 10000
     },
     content: {
       width: width || 500,
