@@ -1,7 +1,7 @@
 {
   "@import": "medmain/npm-package#^0.1.0",
   "name": "@medmain/react-modal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Modal dialog component for React (using Radium and Radium Starter)",
   "contributors": [
     "Michael Rambeau <michael@medmain.com>",
