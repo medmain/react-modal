@@ -17,8 +17,12 @@ export class Modal extends Base {
     };
   }
 
+  /* Create the React element only once, to avoid blinking effects when the application updates */
   createElement() {
-    return React.createElement(subscribe(this)(Stack), {modal: this});
+    if (!this._element) {
+      this._element = React.createElement(subscribe(this)(Stack), {modal: this});
+    }
+    return this._element;
   }
 
   dialog(options = {}) {
